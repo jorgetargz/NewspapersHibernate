@@ -10,11 +10,11 @@ public interface ReadArticleDao {
 
     Either<String, List<Readarticle>> getAll();
 
-    Readarticle save(Readarticle readarticle);
+    Either<String, Readarticle> save(Readarticle readarticle);
 
-    Readarticle update(Readarticle readarticle);
+    Either<String, Readarticle> update(Readarticle readarticle);
 
-    Readarticle delete(Readarticle readarticle);
+    Either<String, Boolean> delete(Readarticle readarticle);
 
-    void deleteAll(Reader reader);
+    Either<String, Boolean> deleteAll(Reader reader);
 }

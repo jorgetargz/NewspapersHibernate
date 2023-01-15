@@ -23,6 +23,9 @@ import java.util.Objects;
 @NamedQuery(name = "HQL_DELETE_READARTICLE_BY_READER",
         query = "delete from Readarticle ra where ra.readerById = :reader")
 
+@NamedQuery(name = "HQL_UPDATE_READARTICLE_BY_ARTICLE_ID_AND_READER_ID",
+        query = "update Readarticle ra set ra.rating = :rating where ra.articleById = :article and ra.readerById = :reader")
+
 public class Readarticle {
 
     @Id
@@ -35,13 +38,13 @@ public class Readarticle {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_article", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "id_article", referencedColumnName = "id", nullable = false)
     @ToString.Exclude
     private Article articleById;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_reader", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "id_reader", referencedColumnName = "id", nullable = false)
     @ToString.Exclude
     private Reader readerById;
 

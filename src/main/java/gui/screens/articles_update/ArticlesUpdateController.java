@@ -72,8 +72,9 @@ public class ArticlesUpdateController extends BaseScreenController {
     @FXML
     private void updateArticle() {
         Article article = tableArticles.getSelectionModel().getSelectedItem();
-        articlesUpdateViewModel.updateArticle(article, inputName.getText(),
-                comboType.getValue(), comboNewspaper.getValue());
+        if (article != null) {
+            articlesUpdateViewModel.updateArticle(article, inputName.getText(), comboType.getValue(), comboNewspaper.getValue());
+        }
     }
 
     @FXML
