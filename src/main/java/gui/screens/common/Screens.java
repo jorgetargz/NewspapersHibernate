@@ -14,6 +14,7 @@ public enum Screens {
     READERS_ADD(ScreenConstants.FXML_READERS_ADD_SCREEN_FXML),
     ARTICLE_LIST(ScreenConstants.FXML_ARTICLE_LIST_SCREEN_FXML),
     ARTICLE_ADD(ScreenConstants.FXML_ARTICLE_ADD_SCREEN_FXML),
+    ARTICLES_UPDATE(ScreenConstants.FXML_ARTICLES_UPDATE_SCREEN_FXML),
     ARTICLE_DELETE(ScreenConstants.FXML_ARTICLE_DELETE_SCREEN_FXML);
 
     private final String path;

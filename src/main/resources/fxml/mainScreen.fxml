@@ -40,7 +40,7 @@
                               text="%ListArticles"/>
                     <MenuItem fx:id="menuItemAddArticles" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Add Article"/>
-                    <MenuItem fx:id="menuItemUpdateArticle" mnemonicParsing="false" onAction="#menuOnClick"
+                    <MenuItem fx:id="menuItemUpdateArticles" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Update Article"/>
                     <MenuItem fx:id="menuItemDeleteArticles" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Delete Articles"/>

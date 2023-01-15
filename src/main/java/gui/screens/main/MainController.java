@@ -134,6 +134,7 @@ public class MainController {
             case ScreenConstants.MENU_ITEM_UPDATE_READERS -> cargarPantalla(Screens.READERS_UPDATE);
             case ScreenConstants.MENU_ITEM_LIST_ARTICLES -> cargarPantalla(Screens.ARTICLE_LIST);
             case ScreenConstants.MENU_ITEM_ADD_ARTICLES -> cargarPantalla(Screens.ARTICLE_ADD);
+            case ScreenConstants.MENU_ITEM_UPDATE_ARTICLES -> cargarPantalla(Screens.ARTICLES_UPDATE);
             case ScreenConstants.MENU_ITEM_DELETE_ARTICLES -> cargarPantalla(Screens.ARTICLE_DELETE);
             default -> cargarPantalla(Screens.LOGIN);
         }
