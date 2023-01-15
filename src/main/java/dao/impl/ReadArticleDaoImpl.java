@@ -44,6 +44,26 @@ public class ReadArticleDaoImpl implements ReadArticleDao {
     }
 
     @Override
+    public Either<String, List<Readarticle>> getAll(Reader reader) {
+        Either<String, List<Readarticle>> result = null;
+        em = jpaUtil.getEntityManager();
+        try {
+            result = Either.right(em.createNamedQuery("HQL_GET_ALL_READARTICLES_BY_READER", Readarticle.class)
+                    .setParameter("reader", reader)
+                    .getResultList());
+
+        } catch (PersistenceException e) {
+            result = Either.left(e.getMessage());
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Either<String, Readarticle> save(Readarticle readarticle) {
         Either<String, Readarticle> result = null;
         em = jpaUtil.getEntityManager();

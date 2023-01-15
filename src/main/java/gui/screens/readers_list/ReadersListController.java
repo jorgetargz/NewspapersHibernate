@@ -1,11 +1,11 @@
 package gui.screens.readers_list;
 
 import domain.modelo.ArticleType;
+import domain.modelo.Newspaper;
 import domain.modelo.Reader;
 import gui.screens.common.BaseScreenController;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import jakarta.inject.Inject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -21,6 +21,8 @@ public class ReadersListController extends BaseScreenController {
     private final ReadersListViewModel readersListViewModel;
     @FXML
     private Label title;
+    @FXML
+    private MFXComboBox<Newspaper> newspapersCombo;
     @FXML
     private MFXComboBox<ArticleType> articleTypesCombo;
     @FXML
@@ -46,9 +48,11 @@ public class ReadersListController extends BaseScreenController {
 
         tableReaders.setItems(readersListViewModel.getObservableReaders());
         articleTypesCombo.setItems(readersListViewModel.getObservableArticleTypes());
+        newspapersCombo.setItems(readersListViewModel.getObservableNewspapers());
 
         readersListViewModel.loadReaders();
         readersListViewModel.loadArticleTypes();
+        readersListViewModel.loadNewspapers();
 
         readersListViewModel.getState().addListener((observableValue, oldState, newState) -> {
             if (newState.getError() != null) {
@@ -58,7 +62,15 @@ public class ReadersListController extends BaseScreenController {
         });
     }
 
-    public void filterByArticleType(ActionEvent actionEvent) {
-        readersListViewModel.filterByArticleType(articleTypesCombo.getValue());
+    public void filterByArticleType() {
+        if (articleTypesCombo.getValue() != null) {
+            readersListViewModel.filterByArticleType(articleTypesCombo.getValue());
+        }
+    }
+
+    public void filterByNewspaper() {
+        if (newspapersCombo.getValue() != null) {
+            readersListViewModel.filterByNewspaper(newspapersCombo.getValue());
+        }
     }
 }

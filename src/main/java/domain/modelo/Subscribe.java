@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,6 +13,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "subscribe")
+
+@NamedQuery(name = "HQL_GET_ALL_ACTIVE_SUBSCRIBES_BY_READER",
+        query = "SELECT s FROM Subscribe s WHERE s.readerByIdReader = :reader and s.cancellationDate is null")
+
+@NamedQuery(name = "HQL_DELETE_ALL_SUBSCRIBES_BY_READER",
+        query = "delete from Subscribe s where s.readerByIdReader = :reader")
+
 public class Subscribe {
 
     @Id

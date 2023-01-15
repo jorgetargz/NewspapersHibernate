@@ -3,6 +3,7 @@ package dao.impl;
 import dao.ReadersDao;
 import dao.utils.JPAUtil;
 import domain.modelo.ArticleType;
+import domain.modelo.Newspaper;
 import domain.modelo.Reader;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -47,6 +48,25 @@ public class ReadersDaoImpl implements ReadersDao {
         try {
             list = em.createNamedQuery("HQL_GET_ALL_READERS_BY_ARTICLE_TYPE", Reader.class)
                     .setParameter("type", articleType)
+                    .getResultList();
+
+        } catch (PersistenceException e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Reader> getAll(Newspaper newspaper) {
+        List<Reader> list = null;
+        em = jpaUtil.getEntityManager();
+        try {
+            list = em.createNamedQuery("HQL_GET_ALL_READERS_BY_NEWSPAPER", Reader.class)
+                    .setParameter("newspaper", newspaper)
                     .getResultList();
 
         } catch (PersistenceException e) {

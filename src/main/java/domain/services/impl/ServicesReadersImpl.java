@@ -3,6 +3,7 @@ package domain.services.impl;
 
 import dao.ReadersDao;
 import domain.modelo.ArticleType;
+import domain.modelo.Newspaper;
 import domain.modelo.Reader;
 import domain.services.ServicesReaders;
 import jakarta.inject.Inject;
@@ -27,6 +28,11 @@ public class ServicesReadersImpl implements ServicesReaders {
     @Override
     public List<Reader> scGetAllByArticleType(ArticleType articleType) {
         return daoReaders.getAll(articleType);
+    }
+
+    @Override
+    public List<Reader> scGetAllByNewspaper(Newspaper newspaper) {
+        return daoReaders.getAll(newspaper);
     }
 
     @Override

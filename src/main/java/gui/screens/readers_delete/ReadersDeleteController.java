@@ -45,6 +45,19 @@ public class ReadersDeleteController extends BaseScreenController {
                 getPrincipalController().showAlert(Alert.AlertType.ERROR, "Error", newState.getError());
                 readersDeleteViewModel.cleanState();
             }
+            if (newState.getReaderHasActiveSubscriptions() != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Has active subscriptions");
+                alert.setHeaderText("The reader has active subscriptions");
+                alert.setContentText("Do you want to delete the reader and all his subscriptions?");
+                alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.YES) {
+                    readersDeleteViewModel.deleteReaderConfirmed(newState.getReaderHasActiveSubscriptions());
+                }
+                alert.showAndWait();
+                readersDeleteViewModel.cleanState();
+            }
         });
     }
 

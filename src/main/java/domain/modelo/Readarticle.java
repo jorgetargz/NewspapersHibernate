@@ -18,7 +18,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "readarticle")
 
-@NamedQuery(name = "HQL_GET_ALL_READARTICLES", query = "SELECT r FROM Readarticle r")
+@NamedQuery(name = "HQL_GET_ALL_READARTICLES",
+        query = "SELECT r FROM Readarticle r")
+
+@NamedQuery(name = "HQL_GET_ALL_READARTICLES_BY_READER",
+        query = "SELECT r FROM Readarticle r WHERE r.readerById = :reader")
 
 @NamedQuery(name = "HQL_DELETE_READARTICLE_BY_READER",
         query = "delete from Readarticle ra where ra.readerById = :reader")

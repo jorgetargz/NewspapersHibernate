@@ -2,6 +2,7 @@ package domain.services.impl;
 
 import dao.ReadArticleDao;
 import domain.modelo.Readarticle;
+import domain.modelo.Reader;
 import domain.services.ServicesReadarticles;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -20,6 +21,11 @@ public class ServicesReadarticlesImpl implements ServicesReadarticles {
     @Override
     public Either<String, List<Readarticle>> scGetAll() {
         return readArticleDao.getAll();
+    }
+
+    @Override
+    public Either<String, List<Readarticle>> scGetAllByReader(Reader reader) {
+        return readArticleDao.getAll(reader);
     }
 
     @Override

@@ -10,6 +10,8 @@ public interface ReadArticleDao {
 
     Either<String, List<Readarticle>> getAll();
 
+    Either<String, List<Readarticle>> getAll(Reader reader);
+
     Either<String, Readarticle> save(Readarticle readarticle);
 
     Either<String, Readarticle> update(Readarticle readarticle);

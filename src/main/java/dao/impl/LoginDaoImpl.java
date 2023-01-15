@@ -1,8 +1,8 @@
 package dao.impl;
 
 import dao.LoginDao;
-import domain.modelo.Login;
 import dao.utils.JPAUtil;
+import domain.modelo.Login;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
@@ -59,6 +59,12 @@ public class LoginDaoImpl implements LoginDao {
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("HQL_DELETE_READARTICLE_BY_READER")
+                    .setParameter("reader", login.getReader())
+                    .executeUpdate();
+            em.createNamedQuery("HQL_DELETE_ALL_SUBSCRIBES_BY_READER")
+                    .setParameter("reader", login.getReader())
+                    .executeUpdate();
             em.remove(em.merge(login));
             em.getTransaction().commit();
         } catch (PersistenceException e) {
