@@ -15,6 +15,7 @@ public class ScreenConstants {
     public static final String FXML_READERS_ADD_SCREEN_FXML = "/fxml/readersAdd.fxml";
     public static final String FXML_ARTICLE_LIST_SCREEN_FXML = "/fxml/articlesList.fxml";
     public static final String FXML_ARTICLE_ADD_SCREEN_FXML = "/fxml/articlesAdd.fxml";
+    public static final String FXML_ARTICLE_DELETE_SCREEN_FXML = "/fxml/articlesDelete.fxml";
     public static final String MEDIA_LOGO_PNG = "/media/logo.gif";
     public static final String CSS_DARKMODE_CSS = "/css/darkmode.css";
     public static final String CSS_STYLE_CSS = "/css/style.css";
@@ -41,6 +42,7 @@ public class ScreenConstants {
     public static final String MENU_ITEM_ADD_READERS = "menuItemAddReaders";
     public static final String MENU_ITEM_LIST_ARTICLES = "menuItemListArticles";
     public static final String MENU_ITEM_ADD_ARTICLES = "menuItemAddArticles";
+    public static final String MENU_ITEM_DELETE_ARTICLES = "menuItemDeleteArticles";
     public static final String STYLE = "style";
     public static final String INVALID_CREDENTIALS = "Invalid credentials";
 
