@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17"
@@ -13,7 +11,7 @@
             <TableColumn fx:id="columnId" prefWidth="70.39999389648438" text="ID"/>
             <TableColumn fx:id="columnName" prefWidth="164.80001831054688" text="Name"/>
             <TableColumn fx:id="columnArticleType" prefWidth="136.0" text="Article type"/>
-            <TableColumn fx:id="columnNewspaperId" prefWidth="147.20001220703125" text="Newspaper ID"/>
+            <TableColumn fx:id="columnNewspaperId" prefWidth="147.20001220703125" text="Newspaper"/>
         </columns>
     </TableView>
 </AnchorPane>

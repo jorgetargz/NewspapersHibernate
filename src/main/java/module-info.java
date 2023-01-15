@@ -30,6 +30,8 @@ module NewspaperFX {
     exports gui.screens.readers_update;
     exports gui.screens.readers_add;
     exports gui.screens.readers_delete;
+    exports gui.screens.articles_list;
+    exports gui.screens.articles_add;
 
     exports dao;
     exports common;
@@ -52,6 +54,8 @@ module NewspaperFX {
     opens gui.screens.readers_update;
     opens gui.screens.readers_add;
     opens gui.screens.readers_delete;
+    opens gui.screens.articles_list;
+    opens gui.screens.articles_add;
 
     opens css;
     opens fxml;

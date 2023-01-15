@@ -7,9 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -35,7 +33,7 @@ public class Article {
     @JoinColumn(name = "id_type")
     private ArticleType type;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_newspaper")
     @ToString.Exclude
     private Newspaper idNewspaper;

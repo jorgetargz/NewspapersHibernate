@@ -38,14 +38,12 @@
                 <Menu fx:id="menuArticles" mnemonicParsing="false" text="Articles">
                     <MenuItem fx:id="menuItemListArticles" mnemonicParsing="false" onAction="#menuOnClick"
                               text="%ListArticles"/>
-                    <MenuItem fx:id="menuItemAddArticle" mnemonicParsing="false" onAction="#menuOnClick"
+                    <MenuItem fx:id="menuItemAddArticles" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Add Article"/>
                     <MenuItem fx:id="menuItemUpdateArticle" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Update Article"/>
                     <MenuItem fx:id="menuItemDeleteArticles" mnemonicParsing="false" onAction="#menuOnClick"
                                 text="Delete Articles"/>
-                    <MenuItem fx:id="menuItemAddReadArticle" mnemonicParsing="false" onAction="#menuOnClick"
-                              text="Rank Article"/>
                 </Menu>
                 <Menu fx:id="menuReaders" mnemonicParsing="false" text="Readers">
                     <MenuItem fx:id="menuItemListReaders" mnemonicParsing="false" onAction="#menuOnClick"
@@ -56,16 +54,6 @@
                               text="Update Readers"/>
                     <MenuItem fx:id="menuItemDeleteReaders" mnemonicParsing="false" onAction="#menuOnClick"
                               text="Delete Readers"/>
-                </Menu>
-                <Menu fx:id="menuSubscriptions" mnemonicParsing="false" text="Subscriptions">
-                    <MenuItem fx:id="menuItemListSubscriptions" mnemonicParsing="false" onAction="#menuOnClick"
-                              text="List Subscriptions"/>
-                    <MenuItem fx:id="menuItemAddSubscriptions" mnemonicParsing="false" onAction="#menuOnClick"
-                              text="Add Subscriptions"/>
-                    <MenuItem fx:id="menuItemUpdateSubscriptions" mnemonicParsing="false" onAction="#menuOnClick"
-                              text="Update Subscriptions"/>
-                    <MenuItem fx:id="menuItemDeleteSubscriptions" mnemonicParsing="false" onAction="#menuOnClick"
-                              text="Delete Subscriptions"/>
                 </Menu>
                 <Menu fx:id="menuHelp" mnemonicParsing="false" text="Help">
                     <MenuItem fx:id="menuItemAcercaDe" mnemonicParsing="false" onAction="#acercaDe" text="%About"/>

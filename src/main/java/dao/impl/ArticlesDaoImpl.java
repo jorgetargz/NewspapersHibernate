@@ -42,7 +42,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(article);
+            em.persist(em.merge(article));
             em.getTransaction().commit();
             result = Either.right(article);
         } catch (Exception e) {

@@ -11,7 +11,10 @@ public enum Screens {
     READER_LIST(ScreenConstants.FXML_READER_LIST_SCREEN_FXML),
     READER_DELETE(ScreenConstants.FXML_READER_DELETE_SCREEN_FXML),
     READERS_UPDATE(ScreenConstants.FXML_READERS_UPDATE_SCREEN_FXML),
-    READERS_ADD(ScreenConstants.FXML_READERS_ADD_SCREEN_FXML);
+    READERS_ADD(ScreenConstants.FXML_READERS_ADD_SCREEN_FXML),
+    ARTICLE_LIST(ScreenConstants.FXML_ARTICLE_LIST_SCREEN_FXML),
+    ARTICLE_ADD(ScreenConstants.FXML_ARTICLE_ADD_SCREEN_FXML);
+
     private final String path;
 
     Screens(String path) {

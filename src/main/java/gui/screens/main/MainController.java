@@ -13,7 +13,9 @@ import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -23,7 +25,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Log4j2
@@ -69,7 +70,7 @@ public class MainController {
     }
 
     public void initialize() {
-        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showAlertConfirmClose());
+        closeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> Platform.exit());
         minimizeIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> ((Stage) root.getScene().getWindow()).setIconified(true));
         alwaysOnTopIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             boolean newVal = !primaryStage.isAlwaysOnTop();
@@ -92,23 +93,6 @@ public class MainController {
 
     public double getWidth() {
         return root.getScene().getWindow().getWidth();
-    }
-
-    private void showAlertConfirmClose() {
-        Alert alertCerrar = new Alert(Alert.AlertType.WARNING);
-        alertCerrar.getButtonTypes().remove(ButtonType.OK);
-        alertCerrar.getButtonTypes().add(ButtonType.CANCEL);
-        alertCerrar.getButtonTypes().add(ButtonType.YES);
-        alertCerrar.setHeaderText(ScreenConstants.EXIT);
-        alertCerrar.setTitle(ScreenConstants.EXIT);
-        alertCerrar.setContentText(ScreenConstants.SURE_EXIT);
-        alertCerrar.initOwner(primaryStage.getOwner());
-        Optional<ButtonType> res = alertCerrar.showAndWait();
-        res.ifPresent(buttonType -> {
-            if (buttonType == ButtonType.YES) {
-                Platform.exit();
-            }
-        });
     }
 
     public void showAlert(Alert.AlertType alertType, String titulo, String mensaje) {
@@ -148,6 +132,8 @@ public class MainController {
             case ScreenConstants.MENU_ITEM_DELETE_READERS -> cargarPantalla(Screens.READER_DELETE);
             case ScreenConstants.MENU_ITEM_ADD_READERS -> cargarPantalla(Screens.READERS_ADD);
             case ScreenConstants.MENU_ITEM_UPDATE_READERS -> cargarPantalla(Screens.READERS_UPDATE);
+            case ScreenConstants.MENU_ITEM_LIST_ARTICLES -> cargarPantalla(Screens.ARTICLE_LIST);
+            case ScreenConstants.MENU_ITEM_ADD_ARTICLES -> cargarPantalla(Screens.ARTICLE_ADD);
             default -> cargarPantalla(Screens.LOGIN);
         }
     }
@@ -186,7 +172,7 @@ public class MainController {
 
     @FXML
     private void exit() {
-        showAlertConfirmClose();
+        Platform.exit();
     }
 
     //events launched on other screens

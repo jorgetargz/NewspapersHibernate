@@ -37,9 +37,9 @@ public class ArticlesListController extends BaseScreenController {
         title.setText("List all Articles");
 
         columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnArticleType.setCellValueFactory(new PropertyValueFactory<>("articleType"));
-        columnNewspaperId.setCellValueFactory(new PropertyValueFactory<>("newspaperId"));
+        columnName.setCellValueFactory(new PropertyValueFactory<>("nameArticle"));
+        columnArticleType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        columnNewspaperId.setCellValueFactory(new PropertyValueFactory<>("idNewspaper"));
         tableArticles.setItems(articlesListViewModel.getObservableArticles());
 
         articlesListViewModel.loadArticles();
