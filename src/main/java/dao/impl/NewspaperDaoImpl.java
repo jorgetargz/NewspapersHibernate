@@ -118,7 +118,7 @@ public class NewspaperDaoImpl implements NewspapersDao {
             result = Either.right(true);
         } catch (PersistenceException e) {
             em.getTransaction().rollback();
-            if (e.getCause() instanceof ConstraintViolationException) {
+            if (e.getCause().getCause() instanceof ConstraintViolationException) {
                 result = Either.left(Constantes.DB_CONSTRAINT_VIOLATION_CODE);
             } else {
                 result = Either.left(Constantes.DB_ERROR_CODE);

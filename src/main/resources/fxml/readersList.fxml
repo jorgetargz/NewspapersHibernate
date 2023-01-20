@@ -4,17 +4,22 @@
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.screens.readers_list.ReadersListController">
-    <Label fx:id="title" layoutX="89.0" layoutY="35.0" prefHeight="82.0" prefWidth="801.0" styleClass="title" />
+<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.screens.readers_list.ReadersListController">
+    <Label fx:id="title" layoutX="89.0" layoutY="35.0" prefHeight="82.0" prefWidth="801.0" styleClass="title"/>
     <TableView fx:id="tableReaders" layoutX="151.0" layoutY="227.0" prefHeight="342.0" prefWidth="677.0">
         <columns>
-            <TableColumn fx:id="columnId" prefWidth="104.0" text="ID" />
-            <TableColumn fx:id="columnName" prefWidth="208.79998779296875" text="Name" />
-            <TableColumn fx:id="columnDateOfBirth" prefWidth="177.60003662109375" text="Birthday" />
+            <TableColumn fx:id="columnId" prefWidth="104.0" text="ID"/>
+            <TableColumn fx:id="columnName" prefWidth="208.79998779296875" text="Name"/>
+            <TableColumn fx:id="columnDateOfBirth" prefWidth="177.60003662109375" text="Birthday"/>
         </columns>
     </TableView>
-   <MFXComboBox fx:id="articleTypesCombo" layoutX="151.0" layoutY="155.0" prefHeight="55.0" prefWidth="198.0" />
-   <MFXButton fx:id="filterByArticleTypeBtn" layoutX="366.0" layoutY="155.0" onAction="#filterByArticleType" prefHeight="55.0" prefWidth="109.0" text="Filtrar" />
-   <MFXComboBox fx:id="newspapersCombo" layoutX="504.0" layoutY="155.0" prefHeight="55.0" prefWidth="198.0" />
-   <MFXButton fx:id="filterByNewspaper" layoutX="719.0" layoutY="155.0" onAction="#filterByNewspaper" prefHeight="55.0" prefWidth="109.0" text="Filtrar" />
+    <MFXComboBox fx:id="articleTypesCombo" layoutX="151.0" layoutY="155.0" prefHeight="55.0" prefWidth="198.0"/>
+    <MFXButton fx:id="filterByArticleTypeBtn" layoutX="366.0" layoutY="155.0" onAction="#filterByArticleType"
+               prefHeight="55.0" prefWidth="109.0" text="Filtrar"/>
+    <MFXComboBox fx:id="newspapersCombo" layoutX="504.0" layoutY="155.0" prefHeight="55.0" prefWidth="198.0"/>
+    <MFXButton fx:id="filterByNewspaper" layoutX="719.0" layoutY="155.0" onAction="#filterByNewspaper" prefHeight="55.0"
+               prefWidth="109.0" text="Filtrar"/>
+    <Label layoutX="151.0" layoutY="127.0" text="Filter by article type readed"/>
+    <Label layoutX="504.0" layoutY="127.0" text="Filter by newspaper subscribed"/>
 </AnchorPane>

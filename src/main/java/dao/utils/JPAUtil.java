@@ -12,7 +12,7 @@ public class JPAUtil {
     private final EntityManagerFactory emf;
 
     public JPAUtil() {
-       emf=getEmf();
+        emf = getEmf();
     }
 
     private EntityManagerFactory getEmf() {

@@ -1,5 +1,6 @@
 package gui.screens.articles_list;
 
+import common.Constantes;
 import domain.modelo.Article;
 import domain.modelo.Readarticle;
 import domain.modelo.Reader;
@@ -65,7 +66,7 @@ public class ArticlesListViewModel {
             Either<Integer, Readarticle> response = servicesReadarticles.scSave(readarticle);
             if (response.isRight()) {
                 state.set(new ArticlesListState(null, true, null));
-            } else if (response.getLeft() == -3) {
+            } else if (response.getLeft() == Constantes.DB_CONSTRAINT_VIOLATION_CODE) {
                 state.set(new ArticlesListState(null, false, article));
             } else {
                 state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));

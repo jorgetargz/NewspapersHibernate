@@ -1,5 +1,7 @@
 package gui.screens.newspapers_list;
 
+import domain.modelo.Article;
+import domain.modelo.ArticleType;
 import domain.modelo.Newspaper;
 import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
@@ -10,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 
@@ -19,13 +20,13 @@ public class NewspaperListController extends BaseScreenController {
     private final NewspaperListViewModel newspaperListViewModel;
 
     @FXML
-    public TableView tableArticles;
+    public TableView<Article> tableArticles;
     @FXML
-    public TableColumn columnIdArticle;
+    public TableColumn<Article, Integer> columnIdArticle;
     @FXML
-    public TableColumn columnNameArticle;
+    public TableColumn<Article, String> columnNameArticle;
     @FXML
-    public TableColumn columnArticleType;
+    public TableColumn<Article, ArticleType> columnArticleType;
     @FXML
     private Label title;
     @FXML
@@ -66,7 +67,7 @@ public class NewspaperListController extends BaseScreenController {
 
     @FXML
     public void updateArticlesTable() {
-        Newspaper newspaper = (Newspaper) tableNewspapers.getSelectionModel().getSelectedItem();
+        Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspaperListViewModel.loadArticles(newspaper);
         tableArticles.setItems(newspaperListViewModel.getObservableArticles());
     }

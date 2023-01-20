@@ -1,10 +1,8 @@
 package gui.screens.newspapers_update;
 
 import domain.modelo.Newspaper;
-import domain.modelo.Reader;
 import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
-import gui.screens.readers_update.ReadersUpdateViewModel;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import jakarta.inject.Inject;

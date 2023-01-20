@@ -24,7 +24,7 @@ import java.util.Objects;
 @NamedQuery(name = "HQL_GET_ALL_READERS_BY_ARTICLE_TYPE",
         query = "select a.readerById from Readarticle a where a.articleById.type = :type")
 
-@NamedQuery(name = "HQL_GET_ALL_READERS_BY_NEWSPAPER",
+@NamedQuery(name = "HQL_GET_ALL_READERS_BY_NEWSPAPER_SUBSCRIPTION_ACTIVE",
         query = "select s.readerByIdReader from Subscribe s where s.idNewspaper = :idNewspaper and s.cancellationDate is null")
 
 public class Reader {
@@ -39,7 +39,7 @@ public class Reader {
     @Column(name = "birth_reader")
     private LocalDate dateOfBirth;
 
-    @OneToOne (mappedBy="reader", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(mappedBy = "reader", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST})
     private Login login;
 
 

@@ -69,7 +69,7 @@ public class ReadersDaoImpl implements ReadersDao {
         Either<Integer, List<Reader>> result;
         em = jpaUtil.getEntityManager();
         try {
-            result = Either.right(em.createNamedQuery("HQL_GET_ALL_READERS_BY_NEWSPAPER", Reader.class)
+            result = Either.right(em.createNamedQuery("HQL_GET_ALL_READERS_BY_NEWSPAPER_SUBSCRIPTION_ACTIVE", Reader.class)
                     .setParameter("idNewspaper", newspaper.getId())
                     .getResultList());
 

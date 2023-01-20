@@ -39,11 +39,11 @@
                     <MenuItem fx:id="menuItemListArticles" mnemonicParsing="false" onAction="#menuOnClick"
                               text="%ListArticles"/>
                     <MenuItem fx:id="menuItemAddArticles" mnemonicParsing="false" onAction="#menuOnClick"
-                                text="Add Article"/>
+                              text="Add Article"/>
                     <MenuItem fx:id="menuItemUpdateArticles" mnemonicParsing="false" onAction="#menuOnClick"
-                                text="Update Article"/>
+                              text="Update Article"/>
                     <MenuItem fx:id="menuItemDeleteArticles" mnemonicParsing="false" onAction="#menuOnClick"
-                                text="Delete Articles"/>
+                              text="Delete Articles"/>
                 </Menu>
                 <Menu fx:id="menuReaders" mnemonicParsing="false" text="Readers">
                     <MenuItem fx:id="menuItemListReaders" mnemonicParsing="false" onAction="#menuOnClick"
