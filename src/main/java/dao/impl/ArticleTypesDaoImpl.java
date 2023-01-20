@@ -3,7 +3,6 @@ package dao.impl;
 import dao.ArticleTypesDao;
 import dao.utils.JPAUtil;
 import domain.modelo.ArticleType;
-import domain.modelo.Readarticle;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -24,15 +23,15 @@ public class ArticleTypesDaoImpl  implements ArticleTypesDao {
     }
 
     @Override
-    public Either<String, List<ArticleType>> getAll() {
-        Either<String, List<ArticleType>> result;
+    public Either<Integer, List<ArticleType>> getAll() {
+        Either<Integer, List<ArticleType>> result;
         em = jpaUtil.getEntityManager();
         try {
             result = Either.right(em.createNamedQuery("HQL_GET_ALL_ARTICLETYPES", ArticleType.class)
                     .getResultList());
 
         } catch (PersistenceException e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {

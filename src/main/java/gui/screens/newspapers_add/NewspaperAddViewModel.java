@@ -2,6 +2,7 @@ package gui.screens.newspapers_add;
 
 import domain.modelo.Newspaper;
 import domain.services.ServicesNewspapers;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -16,12 +17,14 @@ import java.util.List;
 public class NewspaperAddViewModel {
 
     private final ServicesNewspapers servicesNewspapers;
+    private final ErrorManager errorManager;
     private final ObjectProperty<NewspaperAddState> state;
     private final ObservableList<Newspaper> observableNewspapers;
 
     @Inject
-    public NewspaperAddViewModel(ServicesNewspapers servicesNewspapers) {
+    public NewspaperAddViewModel(ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
         this.servicesNewspapers = servicesNewspapers;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new NewspaperAddState(null, false));
         observableNewspapers = FXCollections.observableArrayList();
     }
@@ -35,22 +38,22 @@ public class NewspaperAddViewModel {
     }
 
     public void loadNewspapers() {
-        Either<String, List<Newspaper>> either = servicesNewspapers.getNewspapers();
-        if (either.isRight()) {
-            observableNewspapers.setAll(either.get());
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        if (response.isRight()) {
+            observableNewspapers.setAll(response.get());
         } else {
-            state.setValue(new NewspaperAddState(either.getLeft(), false));
+            state.setValue(new NewspaperAddState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 
     public void addNewspaper(String name, LocalDate releaseDate) {
         Newspaper newspaper = new Newspaper(name, releaseDate);
-        Either<String, Newspaper> either = servicesNewspapers.saveNewspaper(newspaper);
-        if (either.isRight()) {
-            observableNewspapers.add(either.get());
+        Either<Integer, Newspaper> response = servicesNewspapers.saveNewspaper(newspaper);
+        if (response.isRight()) {
+            observableNewspapers.add(response.get());
             state.set(new NewspaperAddState(null, true));
         } else {
-            state.set(new NewspaperAddState(either.getLeft(), false));
+            state.setValue(new NewspaperAddState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 

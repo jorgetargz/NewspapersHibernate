@@ -1,13 +1,15 @@
 package domain.services;
 
 import domain.modelo.Login;
-import domain.modelo.Reader;
+import io.vavr.control.Either;
 
 public interface ServicesLogin {
 
-    Login scLogin(String username, String password);
+    Either<Integer, Login> scLogin(String username, String password);
 
-    Login scRegister(Login login);
+    Either<Integer, Login> scRegister(Login login);
 
-    void scDelete(Login login);
+    Either<Integer, Boolean> scDelete(Login login);
+
+    Either<Integer, Boolean> scDeleteWithActiveSubscriptions(Login login);
 }

@@ -5,6 +5,7 @@ import domain.modelo.Readarticle;
 import domain.modelo.Reader;
 import domain.services.ServicesArticles;
 import domain.services.ServicesReadarticles;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -19,13 +20,15 @@ public class ArticlesListViewModel {
 
     private final ServicesArticles servicesArticles;
     private final ServicesReadarticles servicesReadarticles;
+    private final ErrorManager errorManager;
     private final ObjectProperty<ArticlesListState> state;
     private final ObservableList<Article> observableArticles;
 
     @Inject
-    public ArticlesListViewModel(ServicesArticles servicesArticles, ServicesReadarticles servicesReadarticles) {
+    public ArticlesListViewModel(ServicesArticles servicesArticles, ServicesReadarticles servicesReadarticles, ErrorManager errorManager) {
         this.servicesArticles = servicesArticles;
         this.servicesReadarticles = servicesReadarticles;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new ArticlesListState(null, false, null));
         observableArticles = FXCollections.observableArrayList();
     }
@@ -39,12 +42,12 @@ public class ArticlesListViewModel {
     }
 
     public void loadArticles() {
-        Either<String, List<Article>> response = servicesArticles.scGetAll();
+        Either<Integer, List<Article>> response = servicesArticles.scGetAll();
         if (response.isRight()) {
             observableArticles.clear();
             observableArticles.setAll(response.get());
         } else {
-            state.set(new ArticlesListState(response.getLeft(), false, null));
+            state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
         }
     }
 
@@ -59,13 +62,13 @@ public class ArticlesListViewModel {
             readarticle.setArticleById(article);
             readarticle.setReaderById(reader);
             readarticle.setRating(score);
-            Either<String, Readarticle> response = servicesReadarticles.scSave(readarticle);
+            Either<Integer, Readarticle> response = servicesReadarticles.scSave(readarticle);
             if (response.isRight()) {
                 state.set(new ArticlesListState(null, true, null));
-            } else if (response.getLeft().contains("already scored")) {
+            } else if (response.getLeft() == -3) {
                 state.set(new ArticlesListState(null, false, article));
             } else {
-                state.set(new ArticlesListState(response.getLeft(), false, null));
+                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
             }
         } catch (NumberFormatException e) {
             state.set(new ArticlesListState("The score must be a number", false, null));
@@ -79,11 +82,11 @@ public class ArticlesListViewModel {
             readarticle.setArticleById(article);
             readarticle.setReaderById(reader);
             readarticle.setRating(score);
-            Either<String, Readarticle> response = servicesReadarticles.scUpdate(readarticle);
+            Either<Integer, Readarticle> response = servicesReadarticles.scUpdate(readarticle);
             if (response.isRight()) {
                 state.set(new ArticlesListState(null, true, null));
             } else {
-                state.set(new ArticlesListState(response.getLeft(), false, null));
+                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
             }
         } catch (NumberFormatException e) {
             state.set(new ArticlesListState("The score must be a number", false, null));

@@ -3,22 +3,23 @@ package domain.services;
 import domain.modelo.ArticleType;
 import domain.modelo.Newspaper;
 import domain.modelo.Reader;
+import io.vavr.control.Either;
 
 import java.util.List;
 
 public interface ServicesReaders {
 
-    List<Reader> getAll();
+    Either<Integer, List<Reader>> getAll();
 
-    List<Reader> scGetAllByArticleType(ArticleType value);
+    Either<Integer, List<Reader>> scGetAllByArticleType(ArticleType value);
 
-    List<Reader> scGetAllByNewspaper(Newspaper newspaper);
+    Either<Integer, List<Reader>> scGetAllByNewspaper(Newspaper newspaper);
 
-    Reader get(int id);
+    Either<Integer, Reader> get(int id);
 
-    Reader save(Reader reader);
+    Either<Integer, Reader> save(Reader reader);
 
-    Reader update(Reader reader, String password);
+    Either<Integer, Reader> update(Reader reader, String password);
 
-    void delete(Reader reader);
+    Either<Integer, Boolean> delete(Reader reader);
 }

@@ -37,10 +37,6 @@ public class Subscribe {
     private LocalDate signingDate;
 
     @ManyToOne
-    @JoinColumn(name = "id_newspaper", referencedColumnName = "id", insertable = false, updatable = false)
-    private Newspaper newspaperByIdNewspaper;
-
-    @ManyToOne
     @JoinColumn(name = "id_reader", referencedColumnName = "id", insertable = false, updatable = false)
     private Reader readerByIdReader;
 

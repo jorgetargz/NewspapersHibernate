@@ -1,9 +1,9 @@
 package gui.screens.login;
 
 import domain.modelo.Login;
-import domain.modelo.Reader;
 import domain.services.ServicesLogin;
-import gui.screens.common.ScreenConstants;
+import gui.screens.common.ErrorManager;
+import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -12,11 +12,13 @@ import javafx.beans.property.SimpleObjectProperty;
 public class LoginViewModel {
 
     private final ServicesLogin servicesLogin;
+    private final ErrorManager errorManager;
     private final ObjectProperty<LoginState> state;
 
     @Inject
-    public LoginViewModel(ServicesLogin servicesLogin) {
+    public LoginViewModel(ServicesLogin servicesLogin, ErrorManager errorManager) {
         this.servicesLogin = servicesLogin;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new LoginState(null, null));
     }
 
@@ -25,11 +27,11 @@ public class LoginViewModel {
     }
 
     public void doLogin(String username, String password) {
-        Login login = servicesLogin.scLogin(username, password);
-        if (login != null) {
-            state.setValue(new LoginState(login.getReader(), null));
+        Either<Integer, Login> response = servicesLogin.scLogin(username, password);
+        if (response.isRight()) {
+            state.setValue(new LoginState(null, response.get().getReader()));
         } else {
-            state.setValue(new LoginState(null, ScreenConstants.INVALID_CREDENTIALS));
+            state.setValue(new LoginState(errorManager.getErrorMessage(response.getLeft()), null));
         }
     }
 

@@ -30,6 +30,9 @@ import java.util.Objects;
 @NamedQuery(name = "HQL_UPDATE_READARTICLE_BY_ARTICLE_ID_AND_READER_ID",
         query = "update Readarticle ra set ra.rating = :rating where ra.articleById = :article and ra.readerById = :reader")
 
+@NamedQuery(name = "HQL_GET_AVERAGE_RATING_BY_READER",
+        query = "select avg(ra.rating), ra.articleById.idNewspaper from Readarticle ra where ra.readerById = :reader group by ra.articleById.idNewspaper")
+
 public class Readarticle {
 
     @Id

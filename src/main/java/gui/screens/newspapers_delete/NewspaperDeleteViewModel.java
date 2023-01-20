@@ -2,6 +2,7 @@ package gui.screens.newspapers_delete;
 
 import domain.modelo.Newspaper;
 import domain.services.ServicesNewspapers;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -15,12 +16,14 @@ import java.util.List;
 public class NewspaperDeleteViewModel {
 
     private final ServicesNewspapers servicesNewspapers;
+    private final ErrorManager errorManager;
     private final ObjectProperty<NewspaperDeleteState> state;
     private final ObservableList<Newspaper> observableNewspapers;
 
     @Inject
-    public NewspaperDeleteViewModel(ServicesNewspapers servicesNewspapers) {
+    public NewspaperDeleteViewModel(ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
         this.servicesNewspapers = servicesNewspapers;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new NewspaperDeleteState(null));
         observableNewspapers = FXCollections.observableArrayList();
     }
@@ -34,21 +37,21 @@ public class NewspaperDeleteViewModel {
     }
 
     public void loadNewspapers() {
-        Either<String, List<Newspaper>> either = servicesNewspapers.getNewspapers();
-        if (either.isRight()) {
-            observableNewspapers.setAll(either.get());
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        if (response.isRight()) {
+            observableNewspapers.setAll(response.get());
         } else {
-            state.setValue(new NewspaperDeleteState(either.getLeft()));
+            state.setValue(new NewspaperDeleteState(errorManager.getErrorMessage(response.getLeft())));
         }
     }
 
     public void deleteNewspaper(Newspaper newspaper) {
-        Either<String, Newspaper> either = servicesNewspapers.deleteNewspaper(newspaper);
-        if (either.isRight()) {
+        Either<Integer, Boolean> response = servicesNewspapers.deleteNewspaper(newspaper);
+        if (response.isRight()) {
             loadNewspapers();
             state.set(new NewspaperDeleteState(null));
         } else {
-            state.set(new NewspaperDeleteState(either.getLeft()));
+            state.setValue(new NewspaperDeleteState(errorManager.getErrorMessage(response.getLeft())));
         }
     }
 

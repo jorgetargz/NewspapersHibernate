@@ -24,15 +24,15 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
     }
 
     @Override
-    public Either<String, List<Subscribe>> getAll(Reader reader) {
-        Either<String, List<Subscribe>> result = null;
+    public Either<Integer, List<Subscribe>> getAll(Reader reader) {
+        Either<Integer, List<Subscribe>> result;
         em = jpaUtil.getEntityManager();
         try {
             result = Either.right(em.createNamedQuery("HQL_GET_ALL_ACTIVE_SUBSCRIBES_BY_READER", Subscribe.class)
                     .setParameter("reader", reader)
                     .getResultList());
         } catch (PersistenceException e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {

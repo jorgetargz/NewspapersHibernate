@@ -2,7 +2,6 @@ package domain.services.impl;
 
 import dao.ArticleTypesDao;
 import domain.modelo.ArticleType;
-import domain.modelo.Readarticle;
 import domain.services.ServicesArticleTypes;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -19,7 +18,7 @@ public class ServicesArticleTypesImpl implements ServicesArticleTypes {
     }
 
     @Override
-    public Either<String, List<ArticleType>> scGetAll() {
+    public Either<Integer, List<ArticleType>> scGetAll() {
         return daoArticleTypes.getAll();
     }
 }

@@ -19,6 +19,13 @@ import java.util.Objects;
 
 @NamedQuery(name = "HQL_GET_ALL_ARTICLES",
         query = "from Article")
+
+@NamedQuery(name = "HQL_GET_NUMBER_OF_ARTICLE_TYPE_BY_NEWSPAPER",
+        query = "select a.type, count(a.type) " +
+                "from Article a " +
+                "where a.idNewspaper = :newspaper " +
+                "group by a.type")
+
 public class Article {
 
     @Id

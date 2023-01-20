@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class LoginState {
 
-    private final Reader reader;
     private final String error;
+    private final Reader reader;
 
 }

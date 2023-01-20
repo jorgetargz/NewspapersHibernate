@@ -8,9 +8,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -27,7 +25,7 @@ import java.util.Set;
         query = "select a.readerById from Readarticle a where a.articleById.type = :type")
 
 @NamedQuery(name = "HQL_GET_ALL_READERS_BY_NEWSPAPER",
-        query = "select s.readerByIdReader from Subscribe s where s.newspaperByIdNewspaper = :newspaper and s.cancellationDate is null")
+        query = "select s.readerByIdReader from Subscribe s where s.idNewspaper = :idNewspaper and s.cancellationDate is null")
 
 public class Reader {
 
@@ -61,12 +59,6 @@ public class Reader {
     public Reader(String nameInput, LocalDate birthdayInput) {
         this.name = nameInput;
         this.dateOfBirth = birthdayInput;
-    }
-
-    public void changePassword(String password) {
-        if (this.login != null && login.getPassword() != null) {
-            this.login.setPassword(password);
-        }
     }
 
     @Override

@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class ReadersDeleteState {
     private final String error;
-    private final Reader readerHasActiveSubscriptions;
+    private final Reader readerWithActiveSubscriptions;
 }

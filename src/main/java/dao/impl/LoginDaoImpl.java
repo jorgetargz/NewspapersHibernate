@@ -3,6 +3,7 @@ package dao.impl;
 import dao.LoginDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Login;
+import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
@@ -20,30 +21,33 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
-    public Login get(String username) {
-        Login login = null;
+    public Either<Integer, Login> get(String username) {
+        Either<Integer, Login> result;
         em = jpaUtil.getEntityManager();
         try {
-            login = em.find(Login.class, username);
+            result = Either.right(em.find(Login.class, username));
         } catch (PersistenceException e) {
+            result = Either.left(-1);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
             }
         }
-        return login;
+        return result;
     }
 
     @Override
-    public Login save(Login login) {
+    public Either<Integer, Login> save(Login login) {
+        Either<Integer, Login> result;
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(login);
             em.getTransaction().commit();
+            result = Either.right(login);
         } catch (PersistenceException e) {
-            login = null;
+            result =Either.left(-1);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
@@ -51,11 +55,12 @@ public class LoginDaoImpl implements LoginDao {
                 em.close();
             }
         }
-        return login;
+        return result;
     }
 
     @Override
-    public void delete(Login login) {
+    public Either<Integer, Boolean> delete(Login login) {
+        Either<Integer, Boolean> result;
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -67,7 +72,9 @@ public class LoginDaoImpl implements LoginDao {
                     .executeUpdate();
             em.remove(em.merge(login));
             em.getTransaction().commit();
+            result = Either.right(true);
         } catch (PersistenceException e) {
+            result = Either.left(-1);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
@@ -75,5 +82,6 @@ public class LoginDaoImpl implements LoginDao {
                 em.close();
             }
         }
+        return result;
     }
 }

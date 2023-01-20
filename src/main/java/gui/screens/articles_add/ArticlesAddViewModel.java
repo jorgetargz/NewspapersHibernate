@@ -6,6 +6,7 @@ import domain.modelo.Newspaper;
 import domain.services.ServicesArticleTypes;
 import domain.services.ServicesArticles;
 import domain.services.ServicesNewspapers;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -20,16 +21,18 @@ public class ArticlesAddViewModel {
     private final ServicesArticles servicesArticles;
     private final ServicesArticleTypes servicesArticleTypes;
     private final ServicesNewspapers servicesNewspapers;
+    private final ErrorManager errorManager;
     private final ObjectProperty<ArticlesAddState> state;
     private final ObservableList<Article> observableArticles;
     private final ObservableList<ArticleType> observableArticleTypes;
     private final ObservableList<Newspaper> observableNewspapers;
 
     @Inject
-    public ArticlesAddViewModel(ServicesArticles servicesArticles, ServicesArticleTypes servicesArticleTypes, ServicesNewspapers servicesNewspapers) {
+    public ArticlesAddViewModel(ServicesArticles servicesArticles, ServicesArticleTypes servicesArticleTypes, ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
         this.servicesArticles = servicesArticles;
         this.servicesArticleTypes = servicesArticleTypes;
         this.servicesNewspapers = servicesNewspapers;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new ArticlesAddState(null, false));
         observableArticles = FXCollections.observableArrayList();
         observableArticleTypes = FXCollections.observableArrayList();
@@ -53,32 +56,32 @@ public class ArticlesAddViewModel {
     }
 
     public void loadArticles() {
-        Either<String, List<Article>> response = servicesArticles.scGetAll();
+        Either<Integer, List<Article>> response = servicesArticles.scGetAll();
         if (response.isRight()) {
             observableArticles.clear();
             observableArticles.setAll(response.get());
         } else {
-            state.set(new ArticlesAddState(response.getLeft(), false));
+            state.set(new ArticlesAddState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 
     public void loadArticleTypes() {
-        Either<String, List<ArticleType>> response = servicesArticleTypes.scGetAll();
+        Either<Integer, List<ArticleType>> response = servicesArticleTypes.scGetAll();
         if (response.isRight()) {
             observableArticleTypes.clear();
             observableArticleTypes.setAll(response.get());
         } else {
-            state.set(new ArticlesAddState(response.getLeft(), false));
+            state.set(new ArticlesAddState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 
     public void loadNewspapers() {
-        Either<String, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
         if (response.isRight()) {
             observableNewspapers.clear();
             observableNewspapers.setAll(response.get());
         } else {
-            state.set(new ArticlesAddState(response.getLeft(), false));
+            state.set(new ArticlesAddState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 
@@ -87,12 +90,12 @@ public class ArticlesAddViewModel {
             state.set(new ArticlesAddState("Please fill all the fields", false));
         } else {
             Article article = new Article(nameText, articleType, newspaper);
-            Either<String, Article> result = servicesArticles.scSave(article);
+            Either<Integer, Article> result = servicesArticles.scSave(article);
             if (result.isRight()) {
                 state.set(new ArticlesAddState(null, true));
                 loadArticles();
             } else {
-                state.set(new ArticlesAddState(result.getLeft(), false));
+                state.set(new ArticlesAddState(errorManager.getErrorMessage(result.getLeft()), false));
             }
         }
     }

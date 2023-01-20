@@ -2,6 +2,7 @@ package gui.screens.readers_update;
 
 import domain.modelo.Reader;
 import domain.services.ServicesReaders;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -10,16 +11,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReadersUpdateViewModel {
 
     private final ServicesReaders servicesReaders;
+    private final ErrorManager errorManager;
     private final ObjectProperty<ReadersUpdateState> state;
     private final ObservableList<Reader> observableReaders;
 
     @Inject
-    public ReadersUpdateViewModel(ServicesReaders servicesReaders) {
+    public ReadersUpdateViewModel(ServicesReaders servicesReaders, ErrorManager errorManager) {
         this.servicesReaders = servicesReaders;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new ReadersUpdateState(null, false));
         observableReaders = FXCollections.observableArrayList();
     }
@@ -33,8 +37,12 @@ public class ReadersUpdateViewModel {
     }
 
     public void loadReaders() {
-        observableReaders.clear();
-        observableReaders.setAll(servicesReaders.getAll());
+        Either<Integer, List<Reader>> response = servicesReaders.getAll();
+        if (response.isRight()) {
+            observableReaders.setAll(response.get());
+        } else {
+            state.setValue(new ReadersUpdateState(errorManager.getErrorMessage(response.getLeft()), false));
+        }
     }
 
 
@@ -44,12 +52,12 @@ public class ReadersUpdateViewModel {
         } else {
             reader.setName(nameInput);
             reader.setDateOfBirth(birthdayInput);
-            Reader result = servicesReaders.update(reader, passwordInput);
-            if (result == null) {
-                state.set(new ReadersUpdateState("Error updating reader", false));
+            Either<Integer, Reader> response = servicesReaders.update(reader, passwordInput);
+            if (response.isRight()) {
+                state.set(new ReadersUpdateState(null, true));
+                loadReaders();
             } else {
-                state.set(new ReadersUpdateState("Reader updated successfully", true));
-               loadReaders();
+                state.set(new ReadersUpdateState(errorManager.getErrorMessage(response.getLeft()), false));
             }
         }
     }

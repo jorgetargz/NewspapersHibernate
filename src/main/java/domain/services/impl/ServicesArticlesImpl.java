@@ -18,22 +18,22 @@ public class ServicesArticlesImpl implements ServicesArticles {
     }
 
     @Override
-    public Either<String, List<Article>> scGetAll() {
+    public Either<Integer, List<Article>> scGetAll() {
         return articlesDao.getAll();
     }
 
     @Override
-    public Either<String, Article> scSave(Article article) {
+    public Either<Integer, Article> scSave(Article article) {
         return articlesDao.save(article);
     }
 
     @Override
-    public Either<String, Article> scUpdate(Article article) {
+    public Either<Integer, Article> scUpdate(Article article) {
         return articlesDao.update(article);
     }
 
     @Override
-    public Either<String, Boolean> scDelete(Article article) {
+    public Either<Integer, Boolean> scDelete(Article article) {
         return articlesDao.delete(article);
     }
 }

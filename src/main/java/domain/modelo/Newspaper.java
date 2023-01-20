@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
@@ -14,7 +13,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 
 @Entity
@@ -22,6 +20,9 @@ import java.util.Set;
 
 @NamedQuery(name = "HQL_GET_ALL_NEWSPAPERS",
         query = "from Newspaper")
+
+@NamedQuery(name = "HQL_DELETE_ALL_ARTICLES_FROM_NEWSPAPER",
+        query = "delete from Article a where a.idNewspaper = :newspaper")
 
 public class Newspaper {
 

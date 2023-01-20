@@ -20,14 +20,14 @@ public class ArticlesDaoImpl implements ArticlesDao {
     }
 
     @Override
-    public Either<String, List<Article>> getAll() {
-        Either<String, List<Article>> result;
+    public Either<Integer, List<Article>> getAll() {
+        Either<Integer, List<Article>> result;
         em = jpaUtil.getEntityManager();
         try {
             result = Either.right(em.createNamedQuery("HQL_GET_ALL_ARTICLES", Article.class)
                     .getResultList());
         } catch (Exception e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -37,8 +37,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
     }
 
     @Override
-    public Either<String, Article> save(Article article) {
-        Either<String, Article> result;
+    public Either<Integer, Article> save(Article article) {
+        Either<Integer, Article> result;
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -46,7 +46,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(article);
         } catch (Exception e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -56,8 +56,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
     }
 
     @Override
-    public Either<String, Article> update(Article article) {
-        Either<String, Article> result;
+    public Either<Integer, Article> update(Article article) {
+        Either<Integer, Article> result;
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -65,7 +65,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(article);
         } catch (Exception e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -75,8 +75,8 @@ public class ArticlesDaoImpl implements ArticlesDao {
     }
 
     @Override
-    public Either<String, Boolean> delete(Article article) {
-        Either<String, Boolean> result;
+    public Either<Integer, Boolean> delete(Article article) {
+        Either<Integer, Boolean> result;
         em = jpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -84,7 +84,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(true);
         } catch (Exception e) {
-            result = Either.left(e.getMessage());
+            result = Either.left(-1);
         } finally {
             if (em.isOpen()) {
                 em.close();

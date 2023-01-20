@@ -7,5 +7,5 @@ import io.vavr.control.Either;
 import java.util.List;
 
 public interface SubscriptionsDao {
-    Either<String, List<Subscribe>> getAll(Reader reader);
+    Either<Integer, List<Subscribe>> getAll(Reader reader);
 }

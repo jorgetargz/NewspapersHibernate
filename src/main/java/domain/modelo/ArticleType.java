@@ -4,22 +4,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 
 @Entity
 @Table(name = "articletype")
 
 @NamedQuery(name = "HQL_GET_ALL_ARTICLETYPES", query = "SELECT a FROM ArticleType a")
+
+@NamedQuery(name = "HQL_GET_MOST_READ_ARTICLE_TYPE",
+        query = "select ra.articleById.type from Readarticle ra group by ra.articleById.type order by count(ra.articleById.type) desc")
+
 public class ArticleType {
 
     @Id

@@ -6,11 +6,11 @@ import io.vavr.control.Either;
 import java.util.List;
 
 public interface ServicesArticles {
-    Either<String, List<Article>> scGetAll();
+    Either<Integer, List<Article>> scGetAll();
 
-    Either<String, Article> scSave(Article article);
+    Either<Integer, Article> scSave(Article article);
 
-    Either<String, Article> scUpdate(Article article);
+    Either<Integer, Article> scUpdate(Article article);
 
-    Either<String, Boolean> scDelete(Article article);
+    Either<Integer, Boolean> scDelete(Article article);
 }

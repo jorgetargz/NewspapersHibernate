@@ -2,6 +2,7 @@ package gui.screens.newspapers_update;
 
 import domain.modelo.Newspaper;
 import domain.services.ServicesNewspapers;
+import gui.screens.common.ErrorManager;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
@@ -15,12 +16,14 @@ import java.util.List;
 public class NewspaperUpdateViewModel {
 
     private final ServicesNewspapers servicesNewspapers;
+    private final ErrorManager errorManager;
     private final ObjectProperty<NewspaperUpdateState> state;
     private final ObservableList<Newspaper> observableNewspapers;
 
     @Inject
-    public NewspaperUpdateViewModel(ServicesNewspapers servicesNewspapers) {
+    public NewspaperUpdateViewModel(ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
         this.servicesNewspapers = servicesNewspapers;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new NewspaperUpdateState(null, false));
         observableNewspapers = FXCollections.observableArrayList();
     }
@@ -34,11 +37,11 @@ public class NewspaperUpdateViewModel {
     }
 
     public void loadNewspapers() {
-        Either<String, List<Newspaper>> either = servicesNewspapers.getNewspapers();
-        if (either.isRight()) {
-            observableNewspapers.setAll(either.get());
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        if (response.isRight()) {
+            observableNewspapers.setAll(response.get());
         } else {
-            state.setValue(new NewspaperUpdateState(either.getLeft(), false));
+            state.setValue(new NewspaperUpdateState(errorManager.getErrorMessage(response.getLeft()), false));
         }
     }
 
@@ -48,12 +51,12 @@ public class NewspaperUpdateViewModel {
         } else {
             newspaper.setNameNewspaper(nameInput);
             newspaper.setReleaseDate(releaseDate);
-            Either<String, Newspaper> either = servicesNewspapers.updateNewspaper(newspaper);
-            if (either.isRight()) {
+            Either<Integer, Newspaper> response = servicesNewspapers.updateNewspaper(newspaper);
+            if (response.isRight()) {
                 loadNewspapers();
                 state.set(new NewspaperUpdateState(null, true));
             } else {
-                state.set(new NewspaperUpdateState(either.getLeft(), false));
+                state.setValue(new NewspaperUpdateState(errorManager.getErrorMessage(response.getLeft()), false));
             }
         }
     }

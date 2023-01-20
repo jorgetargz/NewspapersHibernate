@@ -2,28 +2,30 @@ package gui.screens.readers_delete;
 
 import domain.modelo.Reader;
 import domain.services.ServicesLogin;
-import domain.services.ServicesReadarticles;
 import domain.services.ServicesReaders;
-import domain.services.ServicesSubscriptions;
+import gui.screens.common.ErrorManager;
+import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class ReadersDeleteViewModel {
 
     private final ServicesReaders servicesReaders;
-    private final ServicesSubscriptions servicesSubscriptions;
     private final ServicesLogin servicesLogin;
+    private final ErrorManager errorManager;
     private final ObjectProperty<ReadersDeleteState> state;
     private final ObservableList<Reader> observableReaders;
 
     @Inject
-    public ReadersDeleteViewModel(ServicesReaders servicesReaders, ServicesReadarticles servicesReadarticles, ServicesSubscriptions servicesSubscriptions, ServicesLogin servicesLogin) {
+    public ReadersDeleteViewModel(ServicesReaders servicesReaders, ServicesLogin servicesLogin, ErrorManager errorManager) {
         this.servicesReaders = servicesReaders;
-        this.servicesSubscriptions = servicesSubscriptions;
         this.servicesLogin = servicesLogin;
+        this.errorManager = errorManager;
         state = new SimpleObjectProperty<>(new ReadersDeleteState(null, null));
         observableReaders = FXCollections.observableArrayList();
     }
@@ -37,18 +39,27 @@ public class ReadersDeleteViewModel {
     }
 
     public void loadReaders() {
-        observableReaders.clear();
-        observableReaders.setAll(servicesReaders.getAll());
+        Either<Integer, List<Reader>> response = servicesReaders.getAll();
+        if (response.isRight()) {
+            observableReaders.setAll(response.get());
+        } else {
+            state.setValue(new ReadersDeleteState(errorManager.getErrorMessage(response.getLeft()), null));
+        }
     }
 
     public void deleteReader(Reader reader) {
         if (reader == null) {
             state.set(new ReadersDeleteState("Select a reader", null));
-        } else if (servicesSubscriptions.scGetAllActiveByReader(reader).get().size() > 0) {
-            state.set(new ReadersDeleteState(null, reader));
         } else {
-            servicesLogin.scDelete(reader.getLogin());
-            loadReaders();
+            Either<Integer, Boolean> response = servicesLogin.scDelete(reader.getLogin());
+            if (response.isRight()) {
+                state.set(new ReadersDeleteState("Reader deleted", null));
+                loadReaders();
+            } else if (response.getLeft() == -5) {
+                state.set(new ReadersDeleteState(null, reader));
+            } else {
+                state.set(new ReadersDeleteState(errorManager.getErrorMessage(response.getLeft()), null));
+            }
         }
     }
 
@@ -56,8 +67,13 @@ public class ReadersDeleteViewModel {
         if (reader == null) {
             state.set(new ReadersDeleteState("Select a reader", null));
         } else {
-            servicesLogin.scDelete(reader.getLogin());
-            loadReaders();
+            Either<Integer, Boolean> response = servicesLogin.scDeleteWithActiveSubscriptions(reader.getLogin());
+            if (response.isRight()) {
+                state.set(new ReadersDeleteState("Reader deleted", null));
+                loadReaders();
+            } else {
+                state.set(new ReadersDeleteState(errorManager.getErrorMessage(response.getLeft()), null));
+            }
         }
     }
 
