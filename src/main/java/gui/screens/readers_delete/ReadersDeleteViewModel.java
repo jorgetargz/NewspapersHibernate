@@ -1,5 +1,6 @@
 package gui.screens.readers_delete;
 
+import common.Constantes;
 import domain.modelo.Reader;
 import domain.services.ServicesLogin;
 import domain.services.ServicesReaders;
@@ -55,7 +56,7 @@ public class ReadersDeleteViewModel {
             if (response.isRight()) {
                 state.set(new ReadersDeleteState("Reader deleted", null));
                 loadReaders();
-            } else if (response.getLeft() == -5) {
+            } else if (response.getLeft() == Constantes.READER_HAS_ACTIVE_SUBSCRIPTIONS_ERROR_CODE) {
                 state.set(new ReadersDeleteState(null, reader));
             } else {
                 state.set(new ReadersDeleteState(errorManager.getErrorMessage(response.getLeft()), null));
