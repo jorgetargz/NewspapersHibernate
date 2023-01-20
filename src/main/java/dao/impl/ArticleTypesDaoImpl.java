@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.ArticleTypesDao;
 import dao.utils.JPAUtil;
 import domain.modelo.ArticleType;
@@ -29,9 +30,8 @@ public class ArticleTypesDaoImpl  implements ArticleTypesDao {
         try {
             result = Either.right(em.createNamedQuery("HQL_GET_ALL_ARTICLETYPES", ArticleType.class)
                     .getResultList());
-
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {

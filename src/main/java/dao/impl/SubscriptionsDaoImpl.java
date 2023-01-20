@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.SubscriptionsDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Reader;
@@ -32,7 +33,7 @@ public class SubscriptionsDaoImpl implements SubscriptionsDao {
                     .setParameter("reader", reader)
                     .getResultList());
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {

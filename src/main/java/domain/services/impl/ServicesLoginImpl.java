@@ -1,5 +1,6 @@
 package domain.services.impl;
 
+import common.Constantes;
 import dao.LoginDao;
 import dao.SubscriptionsDao;
 import domain.modelo.Login;
@@ -25,7 +26,7 @@ public class ServicesLoginImpl implements ServicesLogin {
     public Either<Integer, Login> scLogin(String username, String password) {
         Either<Integer, Login> result = daoLogin.get(username);
         if (result.isRight() && !result.get().getPassword().equals(password)) {
-            result = Either.left(-4);
+            result = Either.left(Constantes.BAD_CREDENTIALS_ERROR_CODE);
         }
         return result;
     }
@@ -39,7 +40,7 @@ public class ServicesLoginImpl implements ServicesLogin {
     public Either<Integer, Boolean> scDelete(Login login) {
         Either<Integer, List<Subscribe>> activeSubsResponse = daoSubscriptions.getAll(login.getReader());
         if (activeSubsResponse.isRight() && !activeSubsResponse.get().isEmpty()) {
-            return Either.left(-5);
+            return Either.left(Constantes.READER_HAS_ACTIVE_SUBSCRIPTIONS_ERROR_CODE);
         }
         return daoLogin.delete(login);
     }

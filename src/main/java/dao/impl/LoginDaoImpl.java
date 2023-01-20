@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.LoginDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Login;
@@ -26,8 +27,11 @@ public class LoginDaoImpl implements LoginDao {
         em = jpaUtil.getEntityManager();
         try {
             result = Either.right(em.find(Login.class, username));
+            if (result.get() == null) {
+                result = Either.left(Constantes.DB_NOT_FOUND_CODE);
+            }
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -47,7 +51,7 @@ public class LoginDaoImpl implements LoginDao {
             em.getTransaction().commit();
             result = Either.right(login);
         } catch (PersistenceException e) {
-            result =Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
@@ -74,7 +78,7 @@ public class LoginDaoImpl implements LoginDao {
             em.getTransaction().commit();
             result = Either.right(true);
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {

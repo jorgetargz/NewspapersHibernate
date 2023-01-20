@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.ArticlesDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Article;
@@ -27,7 +28,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             result = Either.right(em.createNamedQuery("HQL_GET_ALL_ARTICLES", Article.class)
                     .getResultList());
         } catch (Exception e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -46,7 +47,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(article);
         } catch (Exception e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -65,7 +66,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(article);
         } catch (Exception e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -84,7 +85,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             em.getTransaction().commit();
             result = Either.right(true);
         } catch (Exception e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
         } finally {
             if (em.isOpen()) {
                 em.close();

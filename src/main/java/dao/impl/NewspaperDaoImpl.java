@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.NewspapersDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Newspaper;
@@ -32,7 +33,7 @@ public class NewspaperDaoImpl implements NewspapersDao {
                     .getResultList());
 
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -50,11 +51,11 @@ public class NewspaperDaoImpl implements NewspapersDao {
             result = Either.right(em.find(Newspaper.class, id));
             result.get().getArticles().size();
             if (result.get() == null) {
-                result = Either.left(-2);
+                result = Either.left(Constantes.DB_NOT_FOUND_CODE);
                 log.error("No newspapers found with id: " + id);
             }
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -75,7 +76,7 @@ public class NewspaperDaoImpl implements NewspapersDao {
             result = Either.right(newspaper);
         } catch (PersistenceException e) {
             em.getTransaction().rollback();
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -96,7 +97,7 @@ public class NewspaperDaoImpl implements NewspapersDao {
             result = Either.right(newspaper);
         } catch (PersistenceException e) {
             em.getTransaction().rollback();
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -118,9 +119,9 @@ public class NewspaperDaoImpl implements NewspapersDao {
         } catch (PersistenceException e) {
             em.getTransaction().rollback();
             if (e.getCause() instanceof ConstraintViolationException) {
-                result = Either.left(-3);
+                result = Either.left(Constantes.DB_CONSTRAINT_VIOLATION_CODE);
             } else {
-                result = Either.left(-1);
+                result = Either.left(Constantes.DB_ERROR_CODE);
             }
             log.error(e.getMessage(), e);
         } finally {

@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constantes;
 import dao.ReadersDao;
 import dao.utils.JPAUtil;
 import domain.modelo.ArticleType;
@@ -33,7 +34,7 @@ public class ReadersDaoImpl implements ReadersDao {
                     .getResultList());
 
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -53,7 +54,7 @@ public class ReadersDaoImpl implements ReadersDao {
                     .getResultList());
 
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -73,7 +74,7 @@ public class ReadersDaoImpl implements ReadersDao {
                     .getResultList());
 
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -89,8 +90,11 @@ public class ReadersDaoImpl implements ReadersDao {
         em = jpaUtil.getEntityManager();
         try {
             result = Either.right(em.find(Reader.class, id));
+            if (result.get() == null) {
+                result = Either.left(Constantes.DB_NOT_FOUND_CODE);
+            }
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
@@ -110,7 +114,7 @@ public class ReadersDaoImpl implements ReadersDao {
             em.getTransaction().commit();
             result = Either.right(reader);
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
@@ -131,7 +135,7 @@ public class ReadersDaoImpl implements ReadersDao {
             em.getTransaction().commit();
             result = Either.right(reader);
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
@@ -152,7 +156,7 @@ public class ReadersDaoImpl implements ReadersDao {
             em.getTransaction().commit();
             result = Either.right(true);
         } catch (PersistenceException e) {
-            result = Either.left(-1);
+            result = Either.left(Constantes.DB_ERROR_CODE);
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
         } finally {
