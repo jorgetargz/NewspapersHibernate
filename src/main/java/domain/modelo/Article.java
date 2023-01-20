@@ -21,7 +21,7 @@ import java.util.Objects;
         query = "from Article")
 
 
-@NamedQuery(name = "HQL_DELETE_ALL_ARTICLES_FROM_NEWSPAPER",
+@NamedQuery(name = "HQL_DELETE_ALL_ARTICLES_BY_NEWSPAPER",
         query = "delete from Article a " +
                 "where a.idNewspaper = :newspaper")
 

@@ -17,4 +17,6 @@ public interface ServicesNewspapers {
     Either<Integer, Newspaper> updateNewspaper(Newspaper newspaper);
 
     Either<Integer, Boolean> deleteNewspaper(Newspaper newspaper);
+
+    Either<Integer, Boolean> deleteArticles(Newspaper newspaper);
 }

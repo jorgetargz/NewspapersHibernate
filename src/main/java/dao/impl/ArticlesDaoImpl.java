@@ -4,6 +4,7 @@ import common.Constantes;
 import dao.ArticlesDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Article;
+import domain.modelo.Newspaper;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -87,6 +88,28 @@ public class ArticlesDaoImpl implements ArticlesDao {
         try {
             em.getTransaction().begin();
             em.remove(em.merge(article));
+            em.getTransaction().commit();
+            result = Either.right(true);
+        } catch (Exception e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Either<Integer, Boolean> deleteAll(Newspaper newspaper) {
+        Either<Integer, Boolean> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("HQL_DELETE_ALL_ARTICLES_BY_NEWSPAPER")
+                    .setParameter("newspaper", newspaper)
+                    .executeUpdate();
             em.getTransaction().commit();
             result = Either.right(true);
         } catch (Exception e) {

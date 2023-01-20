@@ -1,5 +1,6 @@
 package domain.services.impl;
 
+import dao.ArticlesDao;
 import dao.NewspapersDao;
 import domain.modelo.Newspaper;
 import domain.services.ServicesNewspapers;
@@ -11,10 +12,12 @@ import java.util.List;
 public class ServicesNewspapersImpl implements ServicesNewspapers {
 
     private final NewspapersDao daoNewspapers;
+    private final ArticlesDao daoArticles;
 
     @Inject
-    public ServicesNewspapersImpl(NewspapersDao daoNewspapers) {
+    public ServicesNewspapersImpl(NewspapersDao daoNewspapers, ArticlesDao daoArticles) {
         this.daoNewspapers = daoNewspapers;
+        this.daoArticles = daoArticles;
     }
 
     @Override
@@ -40,6 +43,11 @@ public class ServicesNewspapersImpl implements ServicesNewspapers {
     @Override
     public Either<Integer, Boolean> deleteNewspaper(Newspaper newspaper) {
         return daoNewspapers.delete(newspaper);
+    }
+
+    @Override
+    public Either<Integer, Boolean> deleteArticles(Newspaper newspaper) {
+        return daoArticles.deleteAll(newspaper);
     }
 
 }

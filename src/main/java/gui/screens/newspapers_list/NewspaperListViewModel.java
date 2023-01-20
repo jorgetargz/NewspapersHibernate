@@ -53,15 +53,32 @@ public class NewspaperListViewModel {
     }
 
     public void loadArticles(Newspaper newspaper) {
-        Either<Integer, Newspaper> response = servicesNewspapers.get(newspaper.getId());
-        if (response.isRight()) {
-            observableArticles.setAll(response.get().getArticles());
+        if (newspaper != null) {
+            Either<Integer, Newspaper> response = servicesNewspapers.get(newspaper.getId());
+            if (response.isRight()) {
+                observableArticles.setAll(response.get().getArticles());
+            } else {
+                state.setValue(new NewspaperListState(errorManager.getErrorMessage(response.getLeft())));
+            }
         } else {
-            state.setValue(new NewspaperListState(errorManager.getErrorMessage(response.getLeft())));
+            observableArticles.clear();
         }
     }
 
     public void cleanState() {
         state.set(new NewspaperListState(null));
+    }
+
+    public void deleteArticles(Newspaper newspaper) {
+        if (newspaper != null) {
+            Either<Integer, Boolean> response = servicesNewspapers.deleteArticles(newspaper);
+            if (response.isRight()) {
+                observableArticles.clear();
+            } else {
+                state.setValue(new NewspaperListState(errorManager.getErrorMessage(response.getLeft())));
+            }
+        } else {
+            state.setValue(new NewspaperListState("No newspaper selected"));
+        }
     }
 }

@@ -15,4 +15,5 @@ public interface NewspapersDao {
     Either<Integer, Newspaper> update(Newspaper newspaper);
 
     Either<Integer, Boolean> delete(Newspaper newspaper);
+
 }

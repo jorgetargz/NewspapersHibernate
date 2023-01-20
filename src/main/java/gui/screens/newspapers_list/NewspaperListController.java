@@ -49,11 +49,13 @@ public class NewspaperListController extends BaseScreenController {
         columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("nameNewspaper"));
         columnPublishDate.setCellValueFactory(new PropertyValueFactory<>("releaseDate"));
-        tableNewspapers.setItems(newspaperListViewModel.getObservableNewspapers());
 
         columnIdArticle.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnNameArticle.setCellValueFactory(new PropertyValueFactory<>("nameArticle"));
         columnArticleType.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        tableNewspapers.setItems(newspaperListViewModel.getObservableNewspapers());
+        tableArticles.setItems(newspaperListViewModel.getObservableArticles());
 
         newspaperListViewModel.loadNewspapers();
 
@@ -69,6 +71,10 @@ public class NewspaperListController extends BaseScreenController {
     public void updateArticlesTable() {
         Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspaperListViewModel.loadArticles(newspaper);
-        tableArticles.setItems(newspaperListViewModel.getObservableArticles());
+    }
+
+    public void deleteArticles() {
+        Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
+        newspaperListViewModel.deleteArticles(newspaper);
     }
 }
