@@ -54,9 +54,7 @@ public class ReadersDeleteController extends BaseScreenController {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.YES) {
                     readersDeleteViewModel.deleteReaderConfirmed(newState.getReaderWithActiveSubscriptions());
-                    readersDeleteViewModel.cleanState();
                 }
-                alert.showAndWait();
                 readersDeleteViewModel.cleanState();
             }
         });

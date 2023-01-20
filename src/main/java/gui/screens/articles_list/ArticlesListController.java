@@ -78,8 +78,6 @@ public class ArticlesListController extends BaseScreenController {
                 articlesListViewModel.updateScoreArticle(article, reader, scoreTxt.getText());
             }
         }
-        alert.showAndWait();
-
     }
 
     @Override
