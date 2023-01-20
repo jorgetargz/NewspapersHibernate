@@ -32,13 +32,13 @@ public class ReadArticleDaoImpl implements ReadArticleDao {
             em.getTransaction().commit();
             result = Either.right(readarticle);
         } catch (PersistenceException e) {
-            em.getTransaction().rollback();
-            log.error(e.getMessage(), e);
             if (e.getCause() instanceof ConstraintViolationException) {
                 result = Either.left(Constantes.DB_CONSTRAINT_VIOLATION_CODE);
             } else {
                 result = Either.left(Constantes.DB_ERROR_CODE);
             }
+            em.getTransaction().rollback();
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();

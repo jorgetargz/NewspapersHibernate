@@ -7,9 +7,11 @@ import domain.modelo.Article;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
+@Log4j2
 public class ArticlesDaoImpl implements ArticlesDao {
 
     private final JPAUtil jpaUtil;
@@ -29,6 +31,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
                     .getResultList());
         } catch (Exception e) {
             result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -48,6 +51,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             result = Either.right(article);
         } catch (Exception e) {
             result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -67,6 +71,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             result = Either.right(article);
         } catch (Exception e) {
             result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
@@ -86,6 +91,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
             result = Either.right(true);
         } catch (Exception e) {
             result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
