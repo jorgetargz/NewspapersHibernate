@@ -62,13 +62,15 @@ public class ReadersListController extends BaseScreenController {
         });
     }
 
-    public void filterByArticleType() {
+    @FXML
+    private void filterByArticleType() {
         if (articleTypesCombo.getValue() != null) {
             readersListViewModel.filterByArticleType(articleTypesCombo.getValue());
         }
     }
 
-    public void filterByNewspaper() {
+    @FXML
+    private void filterByNewspaper() {
         if (newspapersCombo.getValue() != null) {
             readersListViewModel.filterByNewspaper(newspapersCombo.getValue());
         }

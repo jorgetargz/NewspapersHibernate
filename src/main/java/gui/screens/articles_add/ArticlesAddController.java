@@ -70,7 +70,8 @@ public class ArticlesAddController extends BaseScreenController {
     }
 
 
-    public void addArticle() {
+    @FXML
+    private void addArticle() {
         articlesAddViewModel.addArticle(inputName.getText(),
                 comboType.getValue(), comboNewspaper.getValue());
     }

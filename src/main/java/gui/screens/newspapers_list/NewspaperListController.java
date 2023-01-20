@@ -20,13 +20,13 @@ public class NewspaperListController extends BaseScreenController {
     private final NewspaperListViewModel newspaperListViewModel;
 
     @FXML
-    public TableView<Article> tableArticles;
+    private TableView<Article> tableArticles;
     @FXML
-    public TableColumn<Article, Integer> columnIdArticle;
+    private TableColumn<Article, Integer> columnIdArticle;
     @FXML
-    public TableColumn<Article, String> columnNameArticle;
+    private TableColumn<Article, String> columnNameArticle;
     @FXML
-    public TableColumn<Article, ArticleType> columnArticleType;
+    private TableColumn<Article, ArticleType> columnArticleType;
     @FXML
     private Label title;
     @FXML
@@ -68,12 +68,13 @@ public class NewspaperListController extends BaseScreenController {
     }
 
     @FXML
-    public void updateArticlesTable() {
+    private void updateArticlesTable() {
         Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspaperListViewModel.loadArticles(newspaper);
     }
 
-    public void deleteArticles() {
+    @FXML
+    private void deleteArticles() {
         Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspaperListViewModel.deleteArticles(newspaper);
     }
