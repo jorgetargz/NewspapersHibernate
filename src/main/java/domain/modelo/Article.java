@@ -20,6 +20,11 @@ import java.util.Objects;
 @NamedQuery(name = "HQL_GET_ALL_ARTICLES",
         query = "from Article")
 
+
+@NamedQuery(name = "HQL_DELETE_ALL_ARTICLES_FROM_NEWSPAPER",
+        query = "delete from Article a " +
+                "where a.idNewspaper = :newspaper")
+
 @NamedQuery(name = "HQL_GET_NUMBER_OF_ARTICLE_TYPE_BY_NEWSPAPER",
         query = "select a.type, count(a.type) " +
                 "from Article a " +

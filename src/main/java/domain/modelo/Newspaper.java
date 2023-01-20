@@ -21,9 +21,6 @@ import java.util.Set;
 @NamedQuery(name = "HQL_GET_ALL_NEWSPAPERS",
         query = "from Newspaper")
 
-@NamedQuery(name = "HQL_DELETE_ALL_ARTICLES_FROM_NEWSPAPER",
-        query = "delete from Article a where a.idNewspaper = :newspaper")
-
 public class Newspaper {
 
     @Id

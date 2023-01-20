@@ -22,10 +22,15 @@ import java.util.Objects;
         query = "from Reader")
 
 @NamedQuery(name = "HQL_GET_ALL_READERS_BY_ARTICLE_TYPE",
-        query = "select a.readerById from Readarticle a where a.articleById.type = :type")
+        query = "select a.readerById " +
+                "from Readarticle a " +
+                "where a.articleById.type = :type")
 
 @NamedQuery(name = "HQL_GET_ALL_READERS_BY_NEWSPAPER_SUBSCRIPTION_ACTIVE",
-        query = "select s.readerByIdReader from Subscribe s where s.idNewspaper = :idNewspaper and s.cancellationDate is null")
+        query = "select s.readerByIdReader " +
+                "from Subscribe s " +
+                "where s.idNewspaper = :idNewspaper " +
+                "and s.cancellationDate is null")
 
 public class Reader {
 

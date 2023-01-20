@@ -15,10 +15,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "articletype")
 
-@NamedQuery(name = "HQL_GET_ALL_ARTICLETYPES", query = "SELECT a FROM ArticleType a")
+@NamedQuery(name = "HQL_GET_ALL_ARTICLETYPES", query = "FROM ArticleType")
 
 @NamedQuery(name = "HQL_GET_MOST_READ_ARTICLE_TYPE",
-        query = "select ra.articleById.type from Readarticle ra group by ra.articleById.type order by count(ra.articleById.type) desc")
+        query = "select ra.articleById.type " +
+                "from Readarticle ra " +
+                "group by ra.articleById.type " +
+                "order by count(ra.articleById.type) desc")
 
 public class ArticleType {
 

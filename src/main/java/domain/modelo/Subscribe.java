@@ -15,10 +15,13 @@ import java.util.Objects;
 @Table(name = "subscribe")
 
 @NamedQuery(name = "HQL_GET_ALL_ACTIVE_SUBSCRIBES_BY_READER",
-        query = "SELECT s FROM Subscribe s WHERE s.readerByIdReader = :reader and s.cancellationDate is null")
+        query = "SELECT s FROM Subscribe s " +
+                "WHERE s.readerByIdReader = :reader " +
+                "and s.cancellationDate is null")
 
 @NamedQuery(name = "HQL_DELETE_ALL_SUBSCRIBES_BY_READER",
-        query = "delete from Subscribe s where s.readerByIdReader = :reader")
+        query = "delete from Subscribe s " +
+                "where s.readerByIdReader = :reader")
 
 public class Subscribe {
 
