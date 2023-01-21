@@ -20,6 +20,12 @@ public class ReadersListController extends BaseScreenController {
 
     private final ReadersListViewModel readersListViewModel;
     @FXML
+    private TableView<AvgRating> tableAvgRatings;
+    @FXML
+    private TableColumn<AvgRating, String> columnNewspaer;
+    @FXML
+    private TableColumn<AvgRating, Double> columnAvgRating;
+    @FXML
     private Label title;
     @FXML
     private MFXComboBox<Newspaper> newspapersCombo;
@@ -46,7 +52,11 @@ public class ReadersListController extends BaseScreenController {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
+        columnNewspaer.setCellValueFactory(new PropertyValueFactory<>("newspaper"));
+        columnAvgRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+
         tableReaders.setItems(readersListViewModel.getObservableReaders());
+        tableAvgRatings.setItems(readersListViewModel.getObservableAvgRatings());
         articleTypesCombo.setItems(readersListViewModel.getObservableArticleTypes());
         newspapersCombo.setItems(readersListViewModel.getObservableNewspapers());
 
@@ -73,6 +83,14 @@ public class ReadersListController extends BaseScreenController {
     private void filterByNewspaper() {
         if (newspapersCombo.getValue() != null) {
             readersListViewModel.filterByNewspaper(newspapersCombo.getValue());
+        }
+    }
+
+    @FXML
+    private void updateAvgRatingsTable() {
+        Reader reader = tableReaders.getSelectionModel().getSelectedItem();
+        if (reader != null) {
+            readersListViewModel.updateAvgRatingsMap(reader);
         }
     }
 }
