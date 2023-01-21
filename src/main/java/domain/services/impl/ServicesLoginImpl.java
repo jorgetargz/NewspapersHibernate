@@ -33,6 +33,7 @@ public class ServicesLoginImpl implements ServicesLogin {
 
     @Override
     public Either<Integer, Login> scRegister(Login login) {
+        login.setRole(Constantes.ROLE_READER);
         return daoLogin.save(login);
     }
 
