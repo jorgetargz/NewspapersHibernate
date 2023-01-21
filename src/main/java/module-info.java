@@ -12,7 +12,11 @@ module NewspaperFX {
     requires java.sql;
     requires com.zaxxer.hikari;
     requires org.hibernate.orm.core;
-    requires jakarta.jakartaee.web.api;
+    requires jakarta.cdi;
+    requires jakarta.inject;
+    requires jakarta.persistence;
+    requires jakarta.transaction;
+    requires jakarta.validation;
 
     exports dao.test;
 
