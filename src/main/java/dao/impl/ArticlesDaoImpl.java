@@ -5,6 +5,7 @@ import dao.ArticlesDao;
 import dao.utils.JPAUtil;
 import domain.modelo.Article;
 import domain.modelo.Newspaper;
+import domain.modelo.Reader;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -40,6 +41,27 @@ public class ArticlesDaoImpl implements ArticlesDao {
         }
         return result;
     }
+
+
+    @Override
+    public Either<Integer, List<Article>> getAll(Reader reader) {
+        Either<Integer, List<Article>> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            result = Either.right(em.createNamedQuery("HQL_GET_ALL_ARTICLES_BY_READER", Article.class)
+                    .setParameter("idReader", reader.getId())
+                    .getResultList());
+        } catch (Exception e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
 
     @Override
     public Either<Integer, Article> save(Article article) {

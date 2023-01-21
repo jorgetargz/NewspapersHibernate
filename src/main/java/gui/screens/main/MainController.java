@@ -1,6 +1,7 @@
 package gui.screens.main;
 
 
+import common.Constantes;
 import domain.modelo.Reader;
 import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +34,20 @@ public class MainController {
 
     final Instance<Object> instance;
     private final Alert alert;
+    @FXML
+    private Menu menuNewspapers;
+    @FXML
+    private Menu menuArticles;
+    @FXML
+    private MenuItem menuItemListArticles;
+    @FXML
+    private MenuItem menuItemAddArticles;
+    @FXML
+    private MenuItem menuItemUpdateArticles;
+    @FXML
+    private MenuItem menuItemDeleteArticles;
+    @FXML
+    private Menu menuReaders;
 
     private Stage primaryStage;
     private double xOffset;
@@ -63,6 +79,25 @@ public class MainController {
 
     public void setReader(Reader reader) {
         this.reader = reader;
+        if (reader != null) {
+            if (reader.getLogin().getRole().equals(Constantes.ROLE_READER)) {
+                menuNewspapers.setVisible(false);
+                menuArticles.setVisible(true);
+                menuItemListArticles.setVisible(true);
+                menuItemAddArticles.setVisible(false);
+                menuItemUpdateArticles.setVisible(false);
+                menuItemDeleteArticles.setVisible(false);
+                menuReaders.setVisible(false);
+            } else if (reader.getLogin().getRole().equals(Constantes.ROLE_ADMIN)) {
+                menuNewspapers.setVisible(true);
+                menuArticles.setVisible(true);
+                menuItemListArticles.setVisible(true);
+                menuItemAddArticles.setVisible(true);
+                menuItemUpdateArticles.setVisible(true);
+                menuItemDeleteArticles.setVisible(true);
+                menuReaders.setVisible(true);
+            }
+        }
     }
 
     public void setStage(Stage stage) {

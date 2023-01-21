@@ -56,6 +56,17 @@ public class ArticlesListViewModel {
         }
     }
 
+    public void loadArticles(Reader reader) {
+        Either<Integer, List<Article>> response = servicesArticles.scGetAllByReader(reader);
+        if (response.isRight()) {
+            observableArticles.clear();
+            observableArticles.setAll(response.get());
+        } else {
+            state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null, null));
+        }
+
+    }
+
     public void scoreArticle(Article article, Reader reader, String scoreTxt) {
         try {
             int score = Integer.parseInt(scoreTxt);

@@ -30,6 +30,24 @@ import java.util.Objects;
                 "where a.idNewspaper.id = :idNewspaper " +
                 "group by a.type")
 
+// It would be great to have the Newspaper object in the Subscribe object,
+// but as I was required not to have it I decided to use a sub-query to get the
+// newspaper ids from the subscribe table. This would be the query if I had the
+// newspaper object in the Subscribe object:
+// @NamedQuery(name = "HQL_GET_ALL_ARTICLES_BY_READER",
+//         query = "select s.newspaperById.articles " +
+//                 "from Subscribe s " +
+//                 "where s.readerById.id = :idReader and s.cancellationDate is null")
+@NamedQuery(name = "HQL_GET_ALL_ARTICLES_BY_READER",
+        query = "select a " +
+                "from Article a " +
+                "where a.idNewspaper.id in " +
+                "(select s.idNewspaper " +
+                "from Subscribe s " +
+                "where s.idReader = :idReader and s.cancellationDate is null)")
+
+
+
 public class Article {
 
     @Id

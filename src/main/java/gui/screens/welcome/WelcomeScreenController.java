@@ -28,7 +28,7 @@ public class WelcomeScreenController extends BaseScreenController {
     @Override
     public void principalCargado() {
         Reader reader = getPrincipalController().getReader();
-        String welcome = "Welcome to Newspapers DB " + reader.getName();
+        String welcome = "Welcome to Newspapers DB \n" + reader.getName();
         lbBienvenido.setText(welcome);
         animarPantalla();
     }

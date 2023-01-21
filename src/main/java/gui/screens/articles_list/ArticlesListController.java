@@ -1,5 +1,6 @@
 package gui.screens.articles_list;
 
+import common.Constantes;
 import domain.modelo.Article;
 import domain.modelo.Reader;
 import gui.screens.common.BaseScreenController;
@@ -41,7 +42,7 @@ public class ArticlesListController extends BaseScreenController {
     }
 
     public void initialize() {
-        title.setText("List all Articles");
+
 
         columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("nameArticle"));
@@ -72,6 +73,20 @@ public class ArticlesListController extends BaseScreenController {
         articlesListViewModel.loadMostReadArticleType();
     }
 
+    @Override
+    public void principalCargado() {
+        if (getPrincipalController().getReader().getLogin().getRole().equals(Constantes.ROLE_ADMIN)) {
+            scoreTxt.setVisible(false);
+            scoreBtn.setVisible(false);
+            title.setText("List all Articles");
+        } else if (getPrincipalController().getReader().getLogin().getRole().equals(Constantes.ROLE_READER)) {
+            articlesListViewModel.loadArticles(getPrincipalController().getReader());
+            scoreTxt.setVisible(true);
+            scoreBtn.setVisible(true);
+            title.setText("List of the articles available for you");
+        }
+    }
+
     private void showScoreArticleAlredyScoredDialog(Article article) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Re-score");
@@ -84,14 +99,6 @@ public class ArticlesListController extends BaseScreenController {
             if (article != null) {
                 articlesListViewModel.updateScoreArticle(article, reader, scoreTxt.getText());
             }
-        }
-    }
-
-    @Override
-    public void principalCargado() {
-        if (getPrincipalController().getReader().getId() < 0) {
-            scoreTxt.setVisible(false);
-            scoreBtn.setVisible(false);
         }
     }
 
