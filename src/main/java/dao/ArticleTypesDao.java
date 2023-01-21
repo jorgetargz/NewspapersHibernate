@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ArticleTypesDao {
     Either<Integer, List<ArticleType>> getAll();
+
+    Either<Integer, ArticleType> getMostRead();
 }

@@ -2,20 +2,23 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.screens.articles_list.ArticlesListController">
-    <Label fx:id="title" layoutX="58.0" layoutY="33.0" prefHeight="82.0" prefWidth="801.0" styleClass="title"/>
-    <TableView fx:id="tableArticles" layoutX="234.0" layoutY="162.0" prefHeight="342.0" prefWidth="528.0">
+
+<AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.screens.articles_list.ArticlesListController">
+    <Label fx:id="title" layoutX="58.0" layoutY="33.0" prefHeight="82.0" prefWidth="801.0" styleClass="title" />
+    <TableView fx:id="tableArticles" layoutX="228.0" layoutY="179.0" prefHeight="342.0" prefWidth="528.0">
         <columns>
-            <TableColumn fx:id="columnId" prefWidth="70.39999389648438" text="ID"/>
-            <TableColumn fx:id="columnName" prefWidth="164.80001831054688" text="Name"/>
-            <TableColumn fx:id="columnArticleType" prefWidth="136.0" text="Article type"/>
-            <TableColumn fx:id="columnNewspaperId" prefWidth="147.20001220703125" text="Newspaper"/>
+            <TableColumn fx:id="columnId" prefWidth="70.39999389648438" text="ID" />
+            <TableColumn fx:id="columnName" prefWidth="164.80001831054688" text="Name" />
+            <TableColumn fx:id="columnArticleType" prefWidth="136.0" text="Article type" />
+            <TableColumn fx:id="columnNewspaperId" prefWidth="147.20001220703125" text="Newspaper" />
         </columns>
     </TableView>
-    <MFXTextField fx:id="scoreTxt" layoutX="306.0" layoutY="524.0" prefHeight="45.0" prefWidth="182.0"/>
-    <MFXButton fx:id="scoreBtn" onAction="#scoreArticle" layoutX="508.0" layoutY="523.0" prefHeight="65.0"
-               prefWidth="182.0" text="Save score"/>
+    <MFXTextField fx:id="scoreTxt" layoutX="339.0" layoutY="542.0" prefHeight="65.0" prefWidth="83.0" />
+    <MFXButton fx:id="scoreBtn" layoutX="459.0" layoutY="542.0" onAction="#scoreArticle" prefHeight="65.0" prefWidth="182.0" text="Save score" />
+   <Label layoutX="312.0" layoutY="148.0" text="Most read article type:" />
+   <Label fx:id="articleTypeMostRead" layoutX="545.0" layoutY="148.0" text="articleTypeMostRead" />
 </AnchorPane>

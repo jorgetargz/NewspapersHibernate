@@ -21,4 +21,9 @@ public class ServicesArticleTypesImpl implements ServicesArticleTypes {
     public Either<Integer, List<ArticleType>> scGetAll() {
         return daoArticleTypes.getAll();
     }
+
+    @Override
+    public Either<Integer, ArticleType> scGetMostRead() {
+        return daoArticleTypes.getMostRead();
+    }
 }

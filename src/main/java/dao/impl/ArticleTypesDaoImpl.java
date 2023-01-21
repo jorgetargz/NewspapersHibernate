@@ -40,4 +40,23 @@ public class ArticleTypesDaoImpl implements ArticleTypesDao {
         }
         return result;
     }
+
+    @Override
+    public Either<Integer, ArticleType> getMostRead() {
+        Either<Integer, ArticleType> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            result = Either.right(em.createNamedQuery("HQL_GET_MOST_READ_ARTICLE_TYPE", ArticleType.class)
+                    .setMaxResults(1)
+                    .getSingleResult());
+        } catch (PersistenceException e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
 }

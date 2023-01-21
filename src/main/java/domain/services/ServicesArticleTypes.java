@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ServicesArticleTypes {
     Either<Integer, List<ArticleType>> scGetAll();
+
+    Either<Integer, ArticleType> scGetMostRead();
 }

@@ -16,6 +16,8 @@ public class ArticlesListController extends BaseScreenController {
 
     private final ArticlesListViewModel articlesListViewModel;
     @FXML
+    private Label articleTypeMostRead;
+    @FXML
     private MFXTextField scoreTxt;
     @FXML
     private MFXButton scoreBtn;
@@ -62,7 +64,12 @@ public class ArticlesListController extends BaseScreenController {
                 showScoreArticleAlredyScoredDialog(newState.getArticleAlreadyScored());
                 articlesListViewModel.cleanState();
             }
+            if (newState.getArticleTypeMostRead() != null) {
+                articleTypeMostRead.setText(newState.getArticleTypeMostRead().toString());
+            }
         });
+
+        articlesListViewModel.loadMostReadArticleType();
     }
 
     private void showScoreArticleAlredyScoredDialog(Article article) {

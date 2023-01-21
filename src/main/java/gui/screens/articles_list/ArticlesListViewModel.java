@@ -2,8 +2,10 @@ package gui.screens.articles_list;
 
 import common.Constantes;
 import domain.modelo.Article;
+import domain.modelo.ArticleType;
 import domain.modelo.Readarticle;
 import domain.modelo.Reader;
+import domain.services.ServicesArticleTypes;
 import domain.services.ServicesArticles;
 import domain.services.ServicesReadarticles;
 import gui.screens.common.ErrorManager;
@@ -20,17 +22,19 @@ import java.util.List;
 public class ArticlesListViewModel {
 
     private final ServicesArticles servicesArticles;
+    private final ServicesArticleTypes servicesArticleTypes;
     private final ServicesReadarticles servicesReadarticles;
     private final ErrorManager errorManager;
     private final ObjectProperty<ArticlesListState> state;
     private final ObservableList<Article> observableArticles;
 
     @Inject
-    public ArticlesListViewModel(ServicesArticles servicesArticles, ServicesReadarticles servicesReadarticles, ErrorManager errorManager) {
+    public ArticlesListViewModel(ServicesArticles servicesArticles, ServicesArticleTypes servicesArticleTypes, ServicesReadarticles servicesReadarticles, ErrorManager errorManager) {
         this.servicesArticles = servicesArticles;
+        this.servicesArticleTypes = servicesArticleTypes;
         this.servicesReadarticles = servicesReadarticles;
         this.errorManager = errorManager;
-        state = new SimpleObjectProperty<>(new ArticlesListState(null, false, null));
+        state = new SimpleObjectProperty<>(new ArticlesListState(null, false, null, null));
         observableArticles = FXCollections.observableArrayList();
     }
 
@@ -48,12 +52,8 @@ public class ArticlesListViewModel {
             observableArticles.clear();
             observableArticles.setAll(response.get());
         } else {
-            state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
+            state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null, null));
         }
-    }
-
-    public void cleanState() {
-        state.set(new ArticlesListState(null, false, null));
     }
 
     public void scoreArticle(Article article, Reader reader, String scoreTxt) {
@@ -65,14 +65,14 @@ public class ArticlesListViewModel {
             readarticle.setRating(score);
             Either<Integer, Readarticle> response = servicesReadarticles.scSave(readarticle);
             if (response.isRight()) {
-                state.set(new ArticlesListState(null, true, null));
+                state.set(new ArticlesListState(null, true, null, null));
             } else if (response.getLeft() == Constantes.DB_CONSTRAINT_VIOLATION_CODE) {
-                state.set(new ArticlesListState(null, false, article));
+                state.set(new ArticlesListState(null, false, article, null));
             } else {
-                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
+                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null, null));
             }
         } catch (NumberFormatException e) {
-            state.set(new ArticlesListState("The score must be a number", false, null));
+            state.set(new ArticlesListState("The score must be a number", false, null, null));
         }
     }
 
@@ -85,12 +85,25 @@ public class ArticlesListViewModel {
             readarticle.setRating(score);
             Either<Integer, Readarticle> response = servicesReadarticles.scUpdate(readarticle);
             if (response.isRight()) {
-                state.set(new ArticlesListState(null, true, null));
+                state.set(new ArticlesListState(null, true, null, null));
             } else {
-                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null));
+                state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null, null));
             }
         } catch (NumberFormatException e) {
-            state.set(new ArticlesListState("The score must be a number", false, null));
+            state.set(new ArticlesListState("The score must be a number", false, null, null));
         }
+    }
+
+    public void loadMostReadArticleType() {
+        Either<Integer, ArticleType> response = servicesArticleTypes.scGetMostRead();
+        if (response.isRight()) {
+            state.set(new ArticlesListState(null, false, null, response.get()));
+        } else {
+            state.set(new ArticlesListState(errorManager.getErrorMessage(response.getLeft()), false, null, null));
+        }
+    }
+
+    public void cleanState() {
+        state.set(new ArticlesListState(null, false, null, null));
     }
 }
