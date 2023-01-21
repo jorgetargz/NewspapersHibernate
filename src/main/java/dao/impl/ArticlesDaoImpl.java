@@ -108,7 +108,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("HQL_DELETE_ALL_ARTICLES_BY_NEWSPAPER")
-                    .setParameter("newspaper", newspaper)
+                    .setParameter("idNewspaper", newspaper.getId())
                     .executeUpdate();
             em.getTransaction().commit();
             result = Either.right(true);

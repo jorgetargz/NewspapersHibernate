@@ -8,6 +8,7 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Map;
 
 public class ServicesNewspapersImpl implements ServicesNewspapers {
 
@@ -48,6 +49,11 @@ public class ServicesNewspapersImpl implements ServicesNewspapers {
     @Override
     public Either<Integer, Boolean> deleteArticles(Newspaper newspaper) {
         return daoArticles.deleteAll(newspaper);
+    }
+
+    @Override
+    public Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper) {
+        return daoNewspapers.getNbrArticles(idNewspaper);
     }
 
 }

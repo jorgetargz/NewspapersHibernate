@@ -5,19 +5,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefHeight="700.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.screens.newspapers_list.NewspaperListController">
     <Label fx:id="title" layoutX="89.0" layoutY="60.0" prefHeight="82.0" prefWidth="801.0" styleClass="title" />
-    <TableView fx:id="tableNewspapers" layoutX="34.0" layoutY="179.0" onMouseClicked="#updateArticlesTable" prefHeight="342.0" prefWidth="455.0">
+    <TableView fx:id="tableNewspapers" layoutX="14.0" layoutY="179.0" onMouseClicked="#updateArticlesTables" prefHeight="342.0" prefWidth="359.0">
         <columns>
-            <TableColumn fx:id="columnId" prefWidth="104.0" text="ID" />
-            <TableColumn fx:id="columnName" prefWidth="191.20001220703125" text="Name" />
-            <TableColumn fx:id="columnPublishDate" prefWidth="140.800048828125" text="Release date" />
+            <TableColumn fx:id="columnId" prefWidth="64.80001831054688" text="ID" />
+            <TableColumn fx:id="columnName" prefWidth="142.4000244140625" text="Name" />
+            <TableColumn fx:id="columnPublishDate" prefWidth="139.19996643066406" text="Release date" />
         </columns>
     </TableView>
-    <TableView fx:id="tableArticles" layoutX="531.0" layoutY="179.0" prefHeight="342.0" prefWidth="396.0">
+    <TableView fx:id="tableArticles" layoutX="381.0" layoutY="179.0" prefHeight="342.0" prefWidth="326.0">
         <columns>
-            <TableColumn fx:id="columnIdArticle" prefWidth="70.39999389648438" text="ID" />
-            <TableColumn fx:id="columnNameArticle" prefWidth="164.80001831054688" text="Name" />
-            <TableColumn fx:id="columnArticleType" prefWidth="147.20001220703125" text="Article type" />
+            <TableColumn fx:id="columnIdArticle" prefWidth="64.800048828125" text="ID" />
+            <TableColumn fx:id="columnNameArticle" prefWidth="124.00006103515625" text="Name" />
+            <TableColumn fx:id="columnArticleType" prefWidth="127.199951171875" text="Article type" />
         </columns>
     </TableView>
-   <MFXButton layoutX="521.0" layoutY="541.0" onAction="#deleteArticles" prefHeight="52.0" prefWidth="416.0" text="Delete all articles of this newspaper" />
+   <MFXButton layoutX="336.0" layoutY="539.0" onAction="#deleteArticles" prefHeight="52.0" prefWidth="416.0" text="Delete all articles of this newspaper" />
+   <TableView fx:id="tableNbrArticlesByType" layoutX="718.0" layoutY="179.0" prefHeight="342.0" prefWidth="226.0">
+      <columns>
+         <TableColumn fx:id="columnNbrArticles" prefWidth="113.60003662109375" text="Nbr articles" />
+         <TableColumn fx:id="columnType" prefWidth="102.4000244140625" text="Type" />
+      </columns>
+   </TableView>
 </AnchorPane>

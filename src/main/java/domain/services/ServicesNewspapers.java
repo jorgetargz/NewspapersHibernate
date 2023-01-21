@@ -4,6 +4,7 @@ import domain.modelo.Newspaper;
 import io.vavr.control.Either;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ServicesNewspapers {
 
@@ -19,4 +20,6 @@ public interface ServicesNewspapers {
     Either<Integer, Boolean> deleteNewspaper(Newspaper newspaper);
 
     Either<Integer, Boolean> deleteArticles(Newspaper newspaper);
+
+    Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper);
 }

@@ -4,6 +4,7 @@ import domain.modelo.Newspaper;
 import io.vavr.control.Either;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NewspapersDao {
     Either<Integer, List<Newspaper>> getAll();
@@ -15,5 +16,7 @@ public interface NewspapersDao {
     Either<Integer, Newspaper> update(Newspaper newspaper);
 
     Either<Integer, Boolean> delete(Newspaper newspaper);
+
+    Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper);
 
 }

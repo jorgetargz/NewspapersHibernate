@@ -18,7 +18,12 @@ import java.time.LocalDate;
 public class NewspaperListController extends BaseScreenController {
 
     private final NewspaperListViewModel newspaperListViewModel;
-
+    @FXML
+    private TableView<NbrArticlesByType> tableNbrArticlesByType;
+    @FXML
+    private TableColumn<NbrArticlesByType, Integer> columnNbrArticles;
+    @FXML
+    private TableColumn<NbrArticlesByType, String> columnType;
     @FXML
     private TableView<Article> tableArticles;
     @FXML
@@ -54,8 +59,12 @@ public class NewspaperListController extends BaseScreenController {
         columnNameArticle.setCellValueFactory(new PropertyValueFactory<>("nameArticle"));
         columnArticleType.setCellValueFactory(new PropertyValueFactory<>("type"));
 
+        columnNbrArticles.setCellValueFactory(new PropertyValueFactory<>("nbrArticles"));
+        columnType.setCellValueFactory(new PropertyValueFactory<>("articleType"));
+
         tableNewspapers.setItems(newspaperListViewModel.getObservableNewspapers());
         tableArticles.setItems(newspaperListViewModel.getObservableArticles());
+        tableNbrArticlesByType.setItems(newspaperListViewModel.getObservableNbrArticlesByType());
 
         newspaperListViewModel.loadNewspapers();
 
@@ -68,9 +77,10 @@ public class NewspaperListController extends BaseScreenController {
     }
 
     @FXML
-    private void updateArticlesTable() {
+    private void updateArticlesTables() {
         Newspaper newspaper = tableNewspapers.getSelectionModel().getSelectedItem();
         newspaperListViewModel.loadArticles(newspaper);
+        newspaperListViewModel.loadNbrArticlesByType(newspaper);
     }
 
     @FXML

@@ -8,10 +8,13 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Tuple;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class NewspaperDaoImpl implements NewspapersDao {
@@ -123,6 +126,31 @@ public class NewspaperDaoImpl implements NewspapersDao {
             } else {
                 result = Either.left(Constantes.DB_ERROR_CODE);
             }
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper) {
+        Either<Integer, Map<String, Integer>> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            result = Either.right(em.createNamedQuery("HQL_GET_NUMBER_OF_ARTICLE_TYPE_BY_NEWSPAPER", Tuple.class)
+                    .setParameter("idNewspaper", idNewspaper)
+                    .getResultStream()
+                    .collect(
+                            Collectors.toMap(
+                                    tuple -> tuple.get(0).toString(),
+                                    tuple -> Integer.parseInt(tuple.get(1).toString())
+                            )
+                    ));
+        } catch (PersistenceException e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
             log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {

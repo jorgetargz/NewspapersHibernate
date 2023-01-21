@@ -12,7 +12,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class NewspaperListViewModel {
 
@@ -21,6 +24,7 @@ public class NewspaperListViewModel {
     private final ObjectProperty<NewspaperListState> state;
     private final ObservableList<Newspaper> observableNewspapers;
     private final ObservableList<Article> observableArticles;
+    private final ObservableList<NbrArticlesByType> observableNbrArticlesByType;
 
     @Inject
     public NewspaperListViewModel(ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
@@ -29,6 +33,7 @@ public class NewspaperListViewModel {
         state = new SimpleObjectProperty<>(new NewspaperListState(null));
         observableNewspapers = FXCollections.observableArrayList();
         observableArticles = FXCollections.observableArrayList();
+        observableNbrArticlesByType = FXCollections.observableArrayList();
     }
 
     public ReadOnlyObjectProperty<NewspaperListState> getState() {
@@ -41,6 +46,10 @@ public class NewspaperListViewModel {
 
     public ObservableList<Article> getObservableArticles() {
         return FXCollections.unmodifiableObservableList(observableArticles);
+    }
+
+    public ObservableList<NbrArticlesByType> getObservableNbrArticlesByType() {
+        return FXCollections.unmodifiableObservableList(observableNbrArticlesByType);
     }
 
     public void loadNewspapers() {
@@ -80,5 +89,28 @@ public class NewspaperListViewModel {
         } else {
             state.setValue(new NewspaperListState("No newspaper selected"));
         }
+    }
+
+    public void loadNbrArticlesByType(Newspaper newspaper) {
+        if (newspaper != null) {
+            Either<Integer, Map<String, Integer>> response = servicesNewspapers.getNbrArticles(newspaper.getId());
+            if (response.isRight()) {
+                observableNbrArticlesByType.setAll(getListOfNbrArticlesByTypeFromMap(response.get()));
+            } else {
+                state.setValue(new NewspaperListState(errorManager.getErrorMessage(response.getLeft())));
+            }
+        } else {
+            state.setValue(new NewspaperListState("No newspaper selected"));
+        }
+    }
+
+    private List<NbrArticlesByType> getListOfNbrArticlesByTypeFromMap(Map<String, Integer> stringIntegerMap) {
+        Iterator<Map.Entry<String, Integer>> iterator = stringIntegerMap.entrySet().iterator();
+        List<NbrArticlesByType> nbrArticlesByTypes = new ArrayList<>();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Integer> entry = iterator.next();
+            nbrArticlesByTypes.add(new NbrArticlesByType(entry.getKey(), entry.getValue()));
+        }
+        return nbrArticlesByTypes;
     }
 }
