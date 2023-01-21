@@ -19,7 +19,8 @@ import java.util.Objects;
 @Table(name = "reader")
 
 @NamedQuery(name = "HQL_GET_ALL_READERS",
-        query = "from Reader")
+        query = "select r from Reader r " +
+                "where r.login.role = 'READER'")
 
 @NamedQuery(name = "HQL_GET_ALL_READERS_BY_ARTICLE_TYPE",
         query = "select a.readerById " +
