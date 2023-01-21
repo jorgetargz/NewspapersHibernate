@@ -37,7 +37,7 @@ import java.util.Objects;
 // @NamedQuery(name = "HQL_GET_ALL_ARTICLES_BY_READER",
 //         query = "select s.newspaperById.articles " +
 //                 "from Subscribe s " +
-//                 "where s.readerById.id = :idReader and s.cancellationDate is null")
+//                 "where s.idReader = :idReader and s.cancellationDate is null")
 @NamedQuery(name = "HQL_GET_ALL_ARTICLES_BY_READER",
         query = "select a " +
                 "from Article a " +
@@ -45,8 +45,6 @@ import java.util.Objects;
                 "(select s.idNewspaper " +
                 "from Subscribe s " +
                 "where s.idReader = :idReader and s.cancellationDate is null)")
-
-
 
 public class Article {
 
