@@ -76,7 +76,7 @@ public class ArticlesUpdateViewModel {
     }
 
     public void loadNewspapers() {
-        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.scGetAll();
         if (response.isRight()) {
             observableNewspapers.clear();
             observableNewspapers.setAll(response.get());

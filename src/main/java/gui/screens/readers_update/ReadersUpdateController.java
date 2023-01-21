@@ -59,6 +59,10 @@ public class ReadersUpdateController extends BaseScreenController {
                 getPrincipalController().showAlert(Alert.AlertType.ERROR, "Error", newState.getError());
                 readersUpdateViewModel.cleanState();
             }
+            if (newState.isReaderUpdated()) {
+                getPrincipalController().showAlert(Alert.AlertType.INFORMATION, "Success", "Reader updated successfully");
+                readersUpdateViewModel.cleanState();
+            }
         });
     }
 

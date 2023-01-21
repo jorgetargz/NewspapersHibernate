@@ -60,6 +60,10 @@ public class ReaderAddController extends BaseScreenController {
                 getPrincipalController().showAlert(Alert.AlertType.ERROR, "Error", newState.getError());
                 readersAddViewModel.cleanState();
             }
+            if (newState.isReaderAdded()) {
+                getPrincipalController().showAlert(Alert.AlertType.INFORMATION, "Success", "Reader added successfully");
+                readersAddViewModel.cleanState();
+            }
         });
     }
 

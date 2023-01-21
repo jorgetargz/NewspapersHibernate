@@ -11,6 +11,6 @@ public interface ServicesReadarticles {
 
     Either<Integer, Readarticle> scUpdate(Readarticle readarticle);
 
-    Either<Integer, Map<Double, String>> getAvgRating(int idReader);
+    Either<Integer, Map<Double, String>> scGetAvgRating(int idReader);
 
 }

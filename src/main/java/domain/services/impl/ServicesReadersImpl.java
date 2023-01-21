@@ -22,7 +22,7 @@ public class ServicesReadersImpl implements ServicesReaders {
 
 
     @Override
-    public Either<Integer, List<Reader>> getAll() {
+    public Either<Integer, List<Reader>> scGetAll() {
         return daoReaders.getAll();
     }
 
@@ -37,17 +37,12 @@ public class ServicesReadersImpl implements ServicesReaders {
     }
 
     @Override
-    public Either<Integer, Reader> get(int id) {
-        return daoReaders.get(id);
-    }
-
-    @Override
-    public Either<Integer, Reader> save(Reader reader) {
+    public Either<Integer, Reader> scSave(Reader reader) {
         return daoReaders.save(reader);
     }
 
     @Override
-    public Either<Integer, Reader> update(Reader reader, String password) {
+    public Either<Integer, Reader> scUpdate(Reader reader, String password) {
         if (password != null) {
             reader.getLogin().setPassword(password);
         }
@@ -55,7 +50,7 @@ public class ServicesReadersImpl implements ServicesReaders {
     }
 
     @Override
-    public Either<Integer, Boolean> delete(Reader reader) {
+    public Either<Integer, Boolean> scDelete(Reader reader) {
         return daoReaders.delete(reader);
     }
 }

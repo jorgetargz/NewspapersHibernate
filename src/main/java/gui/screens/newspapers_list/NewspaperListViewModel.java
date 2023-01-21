@@ -53,7 +53,7 @@ public class NewspaperListViewModel {
     }
 
     public void loadNewspapers() {
-        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.scGetAll();
         if (response.isRight()) {
             observableNewspapers.setAll(response.get());
         } else {
@@ -63,7 +63,7 @@ public class NewspaperListViewModel {
 
     public void loadArticles(Newspaper newspaper) {
         if (newspaper != null) {
-            Either<Integer, Newspaper> response = servicesNewspapers.get(newspaper.getId());
+            Either<Integer, Newspaper> response = servicesNewspapers.scGet(newspaper.getId());
             if (response.isRight()) {
                 observableArticles.setAll(response.get().getArticles());
             } else {
@@ -80,7 +80,7 @@ public class NewspaperListViewModel {
 
     public void deleteArticles(Newspaper newspaper) {
         if (newspaper != null) {
-            Either<Integer, Boolean> response = servicesNewspapers.deleteArticles(newspaper);
+            Either<Integer, Boolean> response = servicesNewspapers.scDeleteArticles(newspaper);
             if (response.isRight()) {
                 observableArticles.clear();
             } else {
@@ -93,7 +93,7 @@ public class NewspaperListViewModel {
 
     public void loadNbrArticlesByType(Newspaper newspaper) {
         if (newspaper != null) {
-            Either<Integer, Map<String, Integer>> response = servicesNewspapers.getNbrArticles(newspaper.getId());
+            Either<Integer, Map<String, Integer>> response = servicesNewspapers.scGetNbrArticlesByType(newspaper.getId());
             if (response.isRight()) {
                 observableNbrArticlesByType.setAll(getListOfNbrArticlesByTypeFromMap(response.get()));
             } else {

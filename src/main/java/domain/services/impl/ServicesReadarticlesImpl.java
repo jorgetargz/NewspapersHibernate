@@ -28,7 +28,7 @@ public class ServicesReadarticlesImpl implements ServicesReadarticles {
     }
 
     @Override
-    public Either<Integer, Map<Double, String>> getAvgRating(int idReader) {
+    public Either<Integer, Map<Double, String>> scGetAvgRating(int idReader) {
         return readArticleDao.getAvgRating(idReader);
     }
 

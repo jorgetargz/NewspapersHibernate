@@ -37,7 +37,7 @@ public class NewspaperDeleteViewModel {
     }
 
     public void loadNewspapers() {
-        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.scGetAll();
         if (response.isRight()) {
             observableNewspapers.setAll(response.get());
         } else {
@@ -46,7 +46,7 @@ public class NewspaperDeleteViewModel {
     }
 
     public void deleteNewspaper(Newspaper newspaper) {
-        Either<Integer, Boolean> response = servicesNewspapers.deleteNewspaper(newspaper);
+        Either<Integer, Boolean> response = servicesNewspapers.scDelete(newspaper);
         if (response.isRight()) {
             loadNewspapers();
             state.set(new NewspaperDeleteState(null));

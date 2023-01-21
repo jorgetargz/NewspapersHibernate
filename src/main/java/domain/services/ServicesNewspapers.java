@@ -9,17 +9,17 @@ import java.util.Map;
 public interface ServicesNewspapers {
 
 
-    Either<Integer, List<Newspaper>> getNewspapers();
+    Either<Integer, List<Newspaper>> scGetAll();
 
-    Either<Integer, Newspaper> get(int id);
+    Either<Integer, Newspaper> scGet(int id);
 
-    Either<Integer, Newspaper> saveNewspaper(Newspaper newspaper);
+    Either<Integer, Newspaper> scSave(Newspaper newspaper);
 
-    Either<Integer, Newspaper> updateNewspaper(Newspaper newspaper);
+    Either<Integer, Newspaper> scUpdate(Newspaper newspaper);
 
-    Either<Integer, Boolean> deleteNewspaper(Newspaper newspaper);
+    Either<Integer, Boolean> scDelete(Newspaper newspaper);
 
-    Either<Integer, Boolean> deleteArticles(Newspaper newspaper);
+    Either<Integer, Boolean> scDeleteArticles(Newspaper newspaper);
 
-    Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper);
+    Either<Integer, Map<String, Integer>> scGetNbrArticlesByType(int idNewspaper);
 }

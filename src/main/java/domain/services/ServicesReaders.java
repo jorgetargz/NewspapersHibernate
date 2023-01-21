@@ -9,17 +9,15 @@ import java.util.List;
 
 public interface ServicesReaders {
 
-    Either<Integer, List<Reader>> getAll();
+    Either<Integer, List<Reader>> scGetAll();
 
     Either<Integer, List<Reader>> scGetAllByArticleType(ArticleType value);
 
     Either<Integer, List<Reader>> scGetAllByNewspaper(Newspaper newspaper);
 
-    Either<Integer, Reader> get(int id);
+    Either<Integer, Reader> scSave(Reader reader);
 
-    Either<Integer, Reader> save(Reader reader);
+    Either<Integer, Reader> scUpdate(Reader reader, String password);
 
-    Either<Integer, Reader> update(Reader reader, String password);
-
-    Either<Integer, Boolean> delete(Reader reader);
+    Either<Integer, Boolean> scDelete(Reader reader);
 }

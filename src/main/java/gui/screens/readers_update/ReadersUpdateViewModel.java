@@ -37,7 +37,7 @@ public class ReadersUpdateViewModel {
     }
 
     public void loadReaders() {
-        Either<Integer, List<Reader>> response = servicesReaders.getAll();
+        Either<Integer, List<Reader>> response = servicesReaders.scGetAll();
         if (response.isRight()) {
             observableReaders.setAll(response.get());
         } else {
@@ -52,7 +52,7 @@ public class ReadersUpdateViewModel {
         } else {
             reader.setName(nameInput);
             reader.setDateOfBirth(birthdayInput);
-            Either<Integer, Reader> response = servicesReaders.update(reader, passwordInput);
+            Either<Integer, Reader> response = servicesReaders.scUpdate(reader, passwordInput);
             if (response.isRight()) {
                 state.set(new ReadersUpdateState(null, true));
                 loadReaders();

@@ -40,7 +40,7 @@ public class ReadersDeleteViewModel {
     }
 
     public void loadReaders() {
-        Either<Integer, List<Reader>> response = servicesReaders.getAll();
+        Either<Integer, List<Reader>> response = servicesReaders.scGetAll();
         if (response.isRight()) {
             observableReaders.setAll(response.get());
         } else {

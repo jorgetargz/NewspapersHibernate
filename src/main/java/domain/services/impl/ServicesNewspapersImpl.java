@@ -22,37 +22,37 @@ public class ServicesNewspapersImpl implements ServicesNewspapers {
     }
 
     @Override
-    public Either<Integer, List<Newspaper>> getNewspapers() {
+    public Either<Integer, List<Newspaper>> scGetAll() {
         return daoNewspapers.getAll();
     }
 
     @Override
-    public Either<Integer, Newspaper> get(int id) {
+    public Either<Integer, Newspaper> scGet(int id) {
         return daoNewspapers.get(id);
     }
 
     @Override
-    public Either<Integer, Newspaper> saveNewspaper(Newspaper newspaper) {
+    public Either<Integer, Newspaper> scSave(Newspaper newspaper) {
         return daoNewspapers.save(newspaper);
     }
 
     @Override
-    public Either<Integer, Newspaper> updateNewspaper(Newspaper newspaper) {
+    public Either<Integer, Newspaper> scUpdate(Newspaper newspaper) {
         return daoNewspapers.update(newspaper);
     }
 
     @Override
-    public Either<Integer, Boolean> deleteNewspaper(Newspaper newspaper) {
+    public Either<Integer, Boolean> scDelete(Newspaper newspaper) {
         return daoNewspapers.delete(newspaper);
     }
 
     @Override
-    public Either<Integer, Boolean> deleteArticles(Newspaper newspaper) {
+    public Either<Integer, Boolean> scDeleteArticles(Newspaper newspaper) {
         return daoArticles.deleteAll(newspaper);
     }
 
     @Override
-    public Either<Integer, Map<String, Integer>> getNbrArticles(int idNewspaper) {
+    public Either<Integer, Map<String, Integer>> scGetNbrArticlesByType(int idNewspaper) {
         return daoNewspapers.getNbrArticles(idNewspaper);
     }
 

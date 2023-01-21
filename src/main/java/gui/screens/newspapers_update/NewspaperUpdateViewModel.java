@@ -37,7 +37,7 @@ public class NewspaperUpdateViewModel {
     }
 
     public void loadNewspapers() {
-        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.scGetAll();
         if (response.isRight()) {
             observableNewspapers.setAll(response.get());
         } else {
@@ -51,7 +51,7 @@ public class NewspaperUpdateViewModel {
         } else {
             newspaper.setNameNewspaper(nameInput);
             newspaper.setReleaseDate(releaseDate);
-            Either<Integer, Newspaper> response = servicesNewspapers.updateNewspaper(newspaper);
+            Either<Integer, Newspaper> response = servicesNewspapers.scUpdate(newspaper);
             if (response.isRight()) {
                 loadNewspapers();
                 state.set(new NewspaperUpdateState(null, true));

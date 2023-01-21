@@ -71,7 +71,7 @@ public class ReadersListViewModel {
 
 
     public void loadReaders() {
-        Either<Integer, List<Reader>> response = servicesReaders.getAll();
+        Either<Integer, List<Reader>> response = servicesReaders.scGetAll();
         if (response.isRight()) {
             observableReaders.setAll(response.get());
         } else {
@@ -89,7 +89,7 @@ public class ReadersListViewModel {
     }
 
     public void loadNewspapers() {
-        Either<Integer, List<Newspaper>> response = servicesNewspapers.getNewspapers();
+        Either<Integer, List<Newspaper>> response = servicesNewspapers.scGetAll();
         if (response.isRight()) {
             observableNewspapers.setAll(response.get());
         } else {
@@ -120,7 +120,7 @@ public class ReadersListViewModel {
     }
 
     public void updateAvgRatingsMap(Reader reader) {
-        Either<Integer, Map<Double, String>> response = servicesReadarticles.getAvgRating(reader.getId());
+        Either<Integer, Map<Double, String>> response = servicesReadarticles.scGetAvgRating(reader.getId());
         if (response.isRight()) {
             observableAvgRatings.setAll(getAvgRatingsListFromMap(response.get()));
         } else {
