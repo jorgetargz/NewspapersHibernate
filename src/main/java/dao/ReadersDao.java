@@ -14,8 +14,6 @@ public interface ReadersDao {
 
     Either<Integer, List<Reader>> getAll(Newspaper newspaper);
 
-    Either<Integer, Reader> get(int id);
-
     Either<Integer, Reader> save(Reader reader);
 
     Either<Integer, Reader> update(Reader reader);

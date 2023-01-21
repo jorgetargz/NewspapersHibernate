@@ -85,26 +85,6 @@ public class ReadersDaoImpl implements ReadersDao {
     }
 
     @Override
-    public Either<Integer, Reader> get(int id) {
-        Either<Integer, Reader> result;
-        em = jpaUtil.getEntityManager();
-        try {
-            result = Either.right(em.find(Reader.class, id));
-            if (result.get() == null) {
-                result = Either.left(Constantes.DB_NOT_FOUND_CODE);
-            }
-        } catch (PersistenceException e) {
-            result = Either.left(Constantes.DB_ERROR_CODE);
-            log.error(e.getMessage(), e);
-        } finally {
-            if (em.isOpen()) {
-                em.close();
-            }
-        }
-        return result;
-    }
-
-    @Override
     public Either<Integer, Reader> save(Reader reader) {
         Either<Integer, Reader> result;
         em = jpaUtil.getEntityManager();
