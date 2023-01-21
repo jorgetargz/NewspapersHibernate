@@ -29,10 +29,10 @@ import java.util.Objects;
                 "and ra.readerById = :reader")
 
 @NamedQuery(name = "HQL_GET_AVERAGE_RATING_BY_READER",
-        query = "select avg(ra.rating), ra.articleById.idNewspaper " +
+        query = "select avg(ra.rating) as AVG_RATING , ra.articleById.idNewspaper.nameNewspaper as Newspaper " +
                 "from Readarticle ra " +
-                "where ra.readerById = :reader " +
-                "group by ra.articleById.idNewspaper")
+                "where ra.readerById.id = :idReader " +
+                "group by ra.articleById.idNewspaper.nameNewspaper")
 
 public class Readarticle {
 

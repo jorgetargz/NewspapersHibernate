@@ -6,6 +6,8 @@ import domain.services.ServicesReadarticles;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 
+import java.util.Map;
+
 public class ServicesReadarticlesImpl implements ServicesReadarticles {
 
     private final ReadArticleDao readArticleDao;
@@ -23,6 +25,11 @@ public class ServicesReadarticlesImpl implements ServicesReadarticles {
     @Override
     public Either<Integer, Readarticle> scUpdate(Readarticle readarticle) {
         return readArticleDao.update(readarticle);
+    }
+
+    @Override
+    public Either<Integer, Map<Double, String>> getAvgRating(int idReader) {
+        return readArticleDao.getAvgRating(idReader);
     }
 
 }

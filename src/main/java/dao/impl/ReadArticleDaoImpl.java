@@ -8,8 +8,12 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Tuple;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.exception.ConstraintViolationException;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class ReadArticleDaoImpl implements ReadArticleDao {
@@ -67,6 +71,31 @@ public class ReadArticleDaoImpl implements ReadArticleDao {
             em.getTransaction().rollback();
             log.error(e.getMessage(), e);
             result = Either.left(Constantes.DB_ERROR_CODE);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Either<Integer, Map<Double, String>> getAvgRating(int idReader) {
+        Either<Integer, Map<Double, String>> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            result = Either.right(em.createNamedQuery("HQL_GET_AVERAGE_RATING_BY_READER", Tuple.class)
+                    .setParameter("idReader", idReader)
+                    .getResultStream()
+                    .collect(
+                            Collectors.toMap(
+                                    tuple -> ((Number) tuple.get(0)).doubleValue(),
+                                    tuple -> ((String) tuple.get(1))
+                            )
+                    ));
+        } catch (PersistenceException e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
+            log.error(e.getMessage(), e);
         } finally {
             if (em.isOpen()) {
                 em.close();
