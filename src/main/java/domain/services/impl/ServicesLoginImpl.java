@@ -37,6 +37,14 @@ public class ServicesLoginImpl implements ServicesLogin {
     }
 
     @Override
+    public Either<Integer, Login> scUpdate(Login login, String password) {
+        if (password != null) {
+            login.setPassword(password);
+        }
+        return daoLogin.update(login);
+    }
+
+    @Override
     public Either<Integer, Boolean> scDelete(Login login) {
         Either<Integer, List<Subscribe>> activeSubsResponse = daoSubscriptions.getAll(login.getReader());
         if (activeSubsResponse.isRight() && !activeSubsResponse.get().isEmpty()) {

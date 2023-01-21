@@ -63,6 +63,27 @@ public class LoginDaoImpl implements LoginDao {
     }
 
     @Override
+    public Either<Integer, Login> update(Login login) {
+        Either<Integer, Login> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(login);
+            em.getTransaction().commit();
+            result = Either.right(login);
+        } catch (PersistenceException e) {
+            result = Either.left(Constantes.DB_ERROR_CODE);
+            em.getTransaction().rollback();
+            log.error(e.getMessage(), e);
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Either<Integer, Boolean> delete(Login login) {
         Either<Integer, Boolean> result;
         em = jpaUtil.getEntityManager();

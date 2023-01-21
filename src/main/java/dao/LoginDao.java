@@ -9,5 +9,7 @@ public interface LoginDao {
 
     Either<Integer, Login> save(Login login);
 
+    Either<Integer, Login> update(Login login);
+
     Either<Integer, Boolean> delete(Login login);
 }

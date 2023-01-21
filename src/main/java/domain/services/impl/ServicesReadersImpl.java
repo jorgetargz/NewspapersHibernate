@@ -36,21 +36,4 @@ public class ServicesReadersImpl implements ServicesReaders {
         return daoReaders.getAll(newspaper);
     }
 
-    @Override
-    public Either<Integer, Reader> scSave(Reader reader) {
-        return daoReaders.save(reader);
-    }
-
-    @Override
-    public Either<Integer, Reader> scUpdate(Reader reader, String password) {
-        if (password != null) {
-            reader.getLogin().setPassword(password);
-        }
-        return daoReaders.update(reader);
-    }
-
-    @Override
-    public Either<Integer, Boolean> scDelete(Reader reader) {
-        return daoReaders.delete(reader);
-    }
 }

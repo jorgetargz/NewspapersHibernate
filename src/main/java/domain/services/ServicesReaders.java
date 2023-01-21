@@ -15,9 +15,4 @@ public interface ServicesReaders {
 
     Either<Integer, List<Reader>> scGetAllByNewspaper(Newspaper newspaper);
 
-    Either<Integer, Reader> scSave(Reader reader);
-
-    Either<Integer, Reader> scUpdate(Reader reader, String password);
-
-    Either<Integer, Boolean> scDelete(Reader reader);
 }
