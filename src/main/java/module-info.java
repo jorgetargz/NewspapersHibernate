@@ -18,8 +18,6 @@ module NewspaperFX {
     requires jakarta.transaction;
     requires jakarta.validation;
 
-    exports dao.test;
-
     exports gui.main;
     exports gui.main.common;
     exports gui.screens.main;
