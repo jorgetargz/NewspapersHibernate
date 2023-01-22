@@ -35,8 +35,6 @@ public class LoginController extends BaseScreenController {
             assert inputStream != null;
             Image logoImage = new Image(inputStream);
             logo.setImage(logoImage);
-            txtUsername.setText("lucia");
-            txtPass.setText("lucia");
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
