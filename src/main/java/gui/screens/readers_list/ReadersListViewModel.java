@@ -16,8 +16,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +30,7 @@ public class ReadersListViewModel {
     private final ObservableList<Reader> observableReaders;
     private final ObservableList<ArticleType> observableArticleTypes;
     private final ObservableList<Newspaper> observableNewspapers;
-    private final ObservableList<AvgRating> observableAvgRatings;
+    private final ObservableList<Map.Entry<Double, String>> observableAvgRatings;
 
 
     @Inject
@@ -65,7 +63,7 @@ public class ReadersListViewModel {
         return FXCollections.unmodifiableObservableList(observableNewspapers);
     }
 
-    public ObservableList<AvgRating> getObservableAvgRatings() {
+    public ObservableList<Map.Entry<Double, String>> getObservableAvgRatings() {
         return FXCollections.unmodifiableObservableList(observableAvgRatings);
     }
 
@@ -122,19 +120,9 @@ public class ReadersListViewModel {
     public void updateAvgRatingsMap(Reader reader) {
         Either<Integer, Map<Double, String>> response = servicesReadarticles.scGetAvgRating(reader.getId());
         if (response.isRight()) {
-            observableAvgRatings.setAll(getAvgRatingsListFromMap(response.get()));
+            observableAvgRatings.setAll(response.get().entrySet());
         } else {
             state.setValue(new ReadersListState(errorManager.getErrorMessage(response.getLeft())));
         }
-    }
-
-    private List<AvgRating> getAvgRatingsListFromMap(Map<Double, String> doubleStringMap) {
-        Iterator<Map.Entry<Double, String>> iterator = doubleStringMap.entrySet().iterator();
-        List<AvgRating> avgRatings = new ArrayList<>();
-        while (iterator.hasNext()) {
-            Map.Entry<Double, String> entry = iterator.next();
-            avgRatings.add(new AvgRating(entry.getValue(), entry.getKey()));
-        }
-        return avgRatings;
     }
 }

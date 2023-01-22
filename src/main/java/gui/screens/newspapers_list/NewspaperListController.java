@@ -6,6 +6,8 @@ import domain.modelo.Newspaper;
 import gui.screens.common.BaseScreenController;
 import gui.screens.common.ScreenConstants;
 import jakarta.inject.Inject;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,16 +16,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public class NewspaperListController extends BaseScreenController {
 
     private final NewspaperListViewModel newspaperListViewModel;
     @FXML
-    private TableView<NbrArticlesByType> tableNbrArticlesByType;
+    private TableView<Map.Entry<String, Integer>> tableNbrArticlesByType;
     @FXML
-    private TableColumn<NbrArticlesByType, Integer> columnNbrArticles;
+    private TableColumn<Map.Entry<String, Integer>, Integer> columnNbrArticles;
     @FXML
-    private TableColumn<NbrArticlesByType, String> columnType;
+    private TableColumn<Map.Entry<String, Integer>, String> columnType;
     @FXML
     private TableView<Article> tableArticles;
     @FXML
@@ -59,8 +62,8 @@ public class NewspaperListController extends BaseScreenController {
         columnNameArticle.setCellValueFactory(new PropertyValueFactory<>("nameArticle"));
         columnArticleType.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        columnNbrArticles.setCellValueFactory(new PropertyValueFactory<>("nbrArticles"));
-        columnType.setCellValueFactory(new PropertyValueFactory<>("articleType"));
+        columnNbrArticles.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getValue()).asObject());
+        columnType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKey()));
 
         tableNewspapers.setItems(newspaperListViewModel.getObservableNewspapers());
         tableArticles.setItems(newspaperListViewModel.getObservableArticles());

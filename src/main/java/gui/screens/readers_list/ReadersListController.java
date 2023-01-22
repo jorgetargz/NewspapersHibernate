@@ -6,6 +6,8 @@ import domain.modelo.Reader;
 import gui.screens.common.BaseScreenController;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import jakarta.inject.Inject;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,17 +16,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public class ReadersListController extends BaseScreenController {
 
 
     private final ReadersListViewModel readersListViewModel;
     @FXML
-    private TableView<AvgRating> tableAvgRatings;
+    private TableView<Map.Entry<Double, String>> tableAvgRatings;
     @FXML
-    private TableColumn<AvgRating, String> columnNewspaer;
+    private TableColumn<Map.Entry<Double, String>, String> columnNewspaer;
     @FXML
-    private TableColumn<AvgRating, Double> columnAvgRating;
+    private TableColumn<Map.Entry<Double, String>, Double> columnAvgRating;
     @FXML
     private Label title;
     @FXML
@@ -52,8 +55,8 @@ public class ReadersListController extends BaseScreenController {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        columnNewspaer.setCellValueFactory(new PropertyValueFactory<>("newspaper"));
-        columnAvgRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        columnNewspaer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue()));
+        columnAvgRating.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getKey()).asObject());
 
         tableReaders.setItems(readersListViewModel.getObservableReaders());
         tableAvgRatings.setItems(readersListViewModel.getObservableAvgRatings());

@@ -12,8 +12,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,7 @@ public class NewspaperListViewModel {
     private final ObjectProperty<NewspaperListState> state;
     private final ObservableList<Newspaper> observableNewspapers;
     private final ObservableList<Article> observableArticles;
-    private final ObservableList<NbrArticlesByType> observableNbrArticlesByType;
+    private final ObservableList<Map.Entry<String, Integer>> observableNbrArticlesByType;
 
     @Inject
     public NewspaperListViewModel(ServicesNewspapers servicesNewspapers, ErrorManager errorManager) {
@@ -48,7 +46,7 @@ public class NewspaperListViewModel {
         return FXCollections.unmodifiableObservableList(observableArticles);
     }
 
-    public ObservableList<NbrArticlesByType> getObservableNbrArticlesByType() {
+    public ObservableList<Map.Entry<String, Integer>> getObservableNbrArticlesByType() {
         return FXCollections.unmodifiableObservableList(observableNbrArticlesByType);
     }
 
@@ -95,22 +93,12 @@ public class NewspaperListViewModel {
         if (newspaper != null) {
             Either<Integer, Map<String, Integer>> response = servicesNewspapers.scGetNbrArticlesByType(newspaper.getId());
             if (response.isRight()) {
-                observableNbrArticlesByType.setAll(getListOfNbrArticlesByTypeFromMap(response.get()));
+                observableNbrArticlesByType.setAll(response.get().entrySet());
             } else {
                 state.setValue(new NewspaperListState(errorManager.getErrorMessage(response.getLeft())));
             }
         } else {
             state.setValue(new NewspaperListState("No newspaper selected"));
         }
-    }
-
-    private List<NbrArticlesByType> getListOfNbrArticlesByTypeFromMap(Map<String, Integer> stringIntegerMap) {
-        Iterator<Map.Entry<String, Integer>> iterator = stringIntegerMap.entrySet().iterator();
-        List<NbrArticlesByType> nbrArticlesByTypes = new ArrayList<>();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Integer> entry = iterator.next();
-            nbrArticlesByTypes.add(new NbrArticlesByType(entry.getKey(), entry.getValue()));
-        }
-        return nbrArticlesByTypes;
     }
 }
